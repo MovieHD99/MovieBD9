@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Daily Movie Updates</title>
   <style>
     body {
@@ -21,6 +21,21 @@
       margin: 0;
       font-size: 2rem;
     }
+    nav {
+      background: #1f1f1f;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 1rem 0;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #e50914;
+    }
     .container {
       padding: 2rem;
     }
@@ -33,24 +48,81 @@
     .movie h2 {
       margin: 0 0 0.5rem 0;
     }
+    .pagination {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .pagination button {
+      background: #e50914;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>🎬 Daily Movie Updates</h1>
   </header>
-  <div class="container">
-    <div class="movie">
-      <h2>Movie Title: The Batman</h2>
-      <p>Release Date: 2022</p>
-      <p>Description: Batman ventures into Gotham’s underworld when a sadistic killer leaves behind a trail of cryptic clues.</p>
-    </div>
-    <div class="movie">
-      <h2>Movie Title: Oppenheimer</h2>
-      <p>Release Date: 2023</p>
-      <p>Description: The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.</p>
-    </div>
-    <!-- You can copy and paste more movie blocks like this -->
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Hollywood</a>
+    <a href="#">Bollywood</a>
+    <a href="#">Bangla</a>
+  </nav>
+
+  <div class="container" id="movie-container"></div>
+
+  <div class="pagination">
+    <button id="next-btn">Next</button>
   </div>
+
+  <script>
+    const movies = [
+      { title: "The Batman", year: "2022", desc: "Batman ventures into Gotham’s underworld when a sadistic killer leaves behind a trail of cryptic clues." },
+      { title: "Oppenheimer", year: "2023", desc: "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb." },
+      { title: "Inception", year: "2010", desc: "A thief who steals corporate secrets through use of dream-sharing technology." },
+      { title: "Dune", year: "2021", desc: "Paul Atreides leads nomadic tribes in a battle to control the desert planet Arrakis." },
+      { title: "RRR", year: "2022", desc: "A tale of two legendary revolutionaries and their journey away from home before they started fighting for their country." },
+      { title: "KGF Chapter 2", year: "2022", desc: "Rocky becomes the uplifter of people struggling at the KGF by fighting against oppression." },
+      { title: "Avengers: Endgame", year: "2019", desc: "The Avengers assemble once more to reverse Thanos' actions and restore balance." },
+      { title: "Pushpa", year: "2021", desc: "A laborer rises through ranks of a red sandalwood smuggling syndicate." },
+      { title: "Spider-Man: No Way Home", year: "2021", desc: "Peter Parker seeks help from Doctor Strange to forget he's Spider-Man." },
+      { title: "The Dark Knight", year: "2008", desc: "Batman sets out to dismantle the remaining criminal organizations that plague the streets." },
+      { title: "Jawan", year: "2023", desc: "A man is driven by a personal vendetta to expose the corruption in society." },
+      { title: "Mirzapur", year: "2018", desc: "A crime thriller set in the heartland of India with violence and power struggles." }
+    ];
+
+    let currentIndex = 0;
+    const limit = 10;
+    const container = document.getElementById("movie-container");
+    const nextBtn = document.getElementById("next-btn");
+
+    function displayMovies() {
+      const nextBatch = movies.slice(currentIndex, currentIndex + limit);
+      nextBatch.forEach(movie => {
+        const div = document.createElement("div");
+        div.className = "movie";
+        div.innerHTML = `
+          <h2>Movie Title: ${movie.title}</h2>
+          <p>Release Date: ${movie.year}</p>
+          <p>Description: ${movie.desc}</p>
+        `;
+        container.appendChild(div);
+      });
+
+      currentIndex += limit;
+      if (currentIndex >= movies.length) {
+        nextBtn.style.display = "none";
+      }
+    }
+
+    nextBtn.addEventListener("click", displayMovies);
+    displayMovies(); // initial load
+  </script>
 </body>
 </html>
