@@ -2,49 +2,131 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Movie Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Movie Updates</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
       background: #121212;
       color: #f5f5f5;
-      padding: 2rem;
     }
-    .movie-details {
-      max-width: 600px;
-      margin: auto;
-      background: #1f1f1f;
+    header {
+      background-color: #e50914;
       padding: 1rem;
-      border-radius: 8px;
       text-align: center;
     }
-    img {
-      max-width: 100%;
-      border-radius: 8px;
-    }
     h1 {
-      margin-top: 0.5rem;
+      margin: 0;
+      font-size: 2rem;
     }
-    p {
-      text-align: left;
+    nav {
+      background: #1f1f1f;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 1rem 0;
     }
-    a.download-btn {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background: #e50914;
-      color: white;
-      border-radius: 4px;
+    nav a {
+      color: #fff;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
+    }
+    nav a:hover {
+      color: #e50914;
+    }
+    .container {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .movie {
+      background: #1f1f1f;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      position: relative;
+    }
+    .movie img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 5px;
+      margin-bottom: 0.5rem;
+    }
+    .movie h2 {
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+    }
+    .details {
+      margin-top: 0.5rem;
+      text-align: left;
+      display: none;
+    }
+    .download-btn {
+      margin-top: 1rem;
+      display: inline-block;
+      background: #e50914;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .view-details-btn {
+      margin-top: 0.5rem;
+      background: transparent;
+      border: 1px solid #e50914;
+      color: #e50914;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.9rem;
+      transition: background 0.3s, color 0.3s;
+    }
+    .view-details-btn:hover {
+      background: #e50914;
+      color: white;
+    }
+    .pagination {
+      text-align: center;
+      margin-top: 2rem;
+      grid-column: 1 / -1;
+    }
+    .pagination button {
+      background: #e50914;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
     }
   </style>
   <script type='text/javascript' src='//surprisinglystaunchdemocratic.com/25/d6/b6/25d6b6c1217d9b56ee6ff123193c4ee1.js'></script>
 </head>
 <body>
+  <header>
+    <h1>🎬 Daily Movie Updates</h1>
+    
+  </header>
 
-  <div class="movie-details" id="movie-details"></div>
+  <nav>
+    <a onclick="filterMovies('All')">All</a>
+    <a onclick="filterMovies('Hollywood')">Hollywood</a>
+    <a onclick="filterMovies('Bollywood')">Bollywood</a>
+    <a onclick="filterMovies('Bangla')">Bangla</a>
+  </nav>
+
+  <div class="container" id="movie-container"></div>
+
+  <div class="pagination">
+    <button id="next-btn">Next</button>
+  </div>
 
   <script>
     const movies = [
@@ -61,28 +143,61 @@
       { title: "Spider-Man: No Way Home", year: "2021", desc: "Peter Parker seeks help from Doctor Strange.", category: "Hollywood", img: "https://i.imgur.com/4bmrrA4.jpg", download: "#" }
     ];
 
-    function getQueryParam(param) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
+    let currentIndex = 0;
+    const limit = 6;
+    let filteredMovies = [...movies];
+    const container = document.getElementById("movie-container");
+    const nextBtn = document.getElementById("next-btn");
+
+    function displayMovies() {
+      const nextBatch = filteredMovies.slice(currentIndex, currentIndex + limit);
+      nextBatch.forEach((movie, index) => {
+        const div = document.createElement("div");
+        div.className = "movie";
+        div.innerHTML = 
+          <img src="${movie.img}" alt="${movie.title}" />
+          <h2>${movie.title}</h2>
+          <button class="view-details-btn">View Details</button>
+          <div class="details">
+            <p><strong>Release Date:</strong> ${movie.year}</p>
+            <p>${movie.desc}</p>
+            <a href="${movie.download}" class="download-btn" download>⬇️ Download</a>
+          </div>
+        ;
+
+        // Add toggle functionality for "View Details"
+        const btn = div.querySelector(".view-details-btn");
+        const details = div.querySelector(".details");
+        btn.addEventListener("click", () => {
+          const isVisible = details.style.display === "block";
+          details.style.display = isVisible ? "none" : "block";
+          btn.textContent = isVisible ? "View Details" : "Hide Details";
+        });
+
+        container.appendChild(div);
+      });
+
+      currentIndex += limit;
+      if (currentIndex >= filteredMovies.length) {
+        nextBtn.style.display = "none";
+      } else {
+        nextBtn.style.display = "inline-block";
+      }
     }
 
-    const title = getQueryParam('title');
-    const movie = movies.find(m => m.title === title);
+    function filterMovies(category) {
+      container.innerHTML = '';
+      currentIndex = 0;
 
-    const container = document.getElementById('movie-details');
+      filteredMovies = category === "All"
+        ? [...movies]
+        : movies.filter(movie => movie.category === category);
 
-    if (movie) {
-      container.innerHTML = `
-        <img src="${movie.img}" alt="${movie.title}" />
-        <h1>${movie.title}</h1>
-        <p><strong>Release Year:</strong> ${movie.year}</p>
-        <p>${movie.desc}</p>
-        <a href="${movie.download}" class="download-btn" download>⬇️ Download</a>
-      `;
-    } else {
-      container.innerHTML = `<p>Movie not found.</p>`;
+      displayMovies();
     }
+
+    nextBtn.addEventListener("click", displayMovies);
+    filterMovies("All"); // Initial load
   </script>
-
 </body>
 </html>
