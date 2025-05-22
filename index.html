@@ -2,14 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Movie Details</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 2rem; background: #121212; color: #f5f5f5; }
-    img { max-width: 300px; border-radius: 5px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #f5f5f5;
+      padding: 2rem;
+    }
+    .movie-details {
+      max-width: 600px;
+      margin: auto;
+      background: #1f1f1f;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    h1 {
+      margin-top: 0.5rem;
+    }
+    p {
+      text-align: left;
+    }
+    a.download-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #e50914;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+    }
   </style>
+  <script type='text/javascript' src='//surprisinglystaunchdemocratic.com/25/d6/b6/25d6b6c1217d9b56ee6ff123193c4ee1.js'></script>
 </head>
 <body>
-  <div id="details"></div>
+
+  <div class="movie-details" id="movie-details"></div>
 
   <script>
     const movies = [
@@ -32,21 +67,22 @@
     }
 
     const title = getQueryParam('title');
-
     const movie = movies.find(m => m.title === title);
 
-    const detailsDiv = document.getElementById('details');
+    const container = document.getElementById('movie-details');
 
-    if (!movie) {
-      detailsDiv.innerHTML = "<h2>Movie not found</h2>";
-    } else {
-      detailsDiv.innerHTML = `
-        <h1>${movie.title} (${movie.year})</h1>
+    if (movie) {
+      container.innerHTML = `
         <img src="${movie.img}" alt="${movie.title}" />
+        <h1>${movie.title}</h1>
+        <p><strong>Release Year:</strong> ${movie.year}</p>
         <p>${movie.desc}</p>
-        <a href="${movie.download}" download>⬇️ Download</a>
+        <a href="${movie.download}" class="download-btn" download>⬇️ Download</a>
       `;
+    } else {
+      container.innerHTML = `<p>Movie not found.</p>`;
     }
   </script>
+
 </body>
 </html>
