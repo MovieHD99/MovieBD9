@@ -1,624 +1,390 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <title>Daily Movie Updates</title>
-  <script>
-        // Redirect to index.html with the requested path as a query parameter
-        const path = window.location.pathname;
-        window.location.href = `/MovieBD99/index.html?p=${encodeURIComponent(path)}`;
-    </script>
-
-    <style>
-
-        body {
-
-            font-family: 'Inter', Arial, sans-serif; /* Using Inter font */
-
-            margin: 0;
-
-            padding: 0;
-
-            background: #121212;
-
-            color: #f5f5f5;
-
-        }
-
-        header {
-
-            background-color: #e50914;
-
-            padding: 1rem;
-
-            text-align: center;
-
-            border-bottom-left-radius: 8px; /* Rounded corners */
-
-            border-bottom-right-radius: 8px;
-
-        }
-
-        h1 {
-
-            margin: 0;
-
-            font-size: 2rem;
-
-            color: #fff;
-
-        }
-
-        nav {
-
-            background: #1f1f1f;
-
-            display: flex;
-
-            justify-content: center;
-
-            gap: 1.5rem;
-
-            padding: 1rem 0;
-
-            border-radius: 8px; /* Rounded corners */
-
-            margin: 1rem;
-
-        }
-
-        nav a {
-
-            color: #fff;
-
-            text-decoration: none;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-            padding: 0.5rem 1rem;
-
-            border-radius: 4px;
-
-            transition: background-color 0.3s ease, color 0.3s ease;
-
-        }
-
-        nav a:hover {
-
-            background-color: #e50914;
-
-            color: #fff;
-
-        }
-
-        .container {
-
-            padding: 2rem;
-
-            display: grid;
-
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
-
-            gap: 1.5rem;
-
-            justify-content: center; /* Center items in grid */
-
-        }
-
-        .movie {
-
-            background: #1f1f1f;
-
-            border-radius: 12px; /* More rounded corners */
-
-            padding: 1.5rem;
-
-            text-align: center;
-
-            position: relative;
-
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-
-            transition: transform 0.2s ease-in-out;
-
-        }
-
-        .movie:hover {
-
-            transform: translateY(-5px); /* Lift effect on hover */
-
-        }
-
-        .movie img {
-
-            width: 100%;
-
-            max-width: 250px; /* Slightly smaller for better fit */
-
-            height: auto; /* Maintain aspect ratio */
-
-            border-radius: 8px; /* Rounded image corners */
-
-            margin-bottom: 1rem;
-
-            object-fit: cover; /* Ensure images cover their area */
-
-        }
-
-        .movie h2 {
-
-            margin: 0.5rem 0;
-
-            font-size: 1.3rem;
-
-            color: #e50914; /* Highlight movie titles */
-
-        }
-
-        .download-btn {
-
-            margin-top: 1rem;
-
-            display: inline-block;
-
-            background: #e50914;
-
-            color: white;
-
-            padding: 0.8rem 1.5rem;
-
-            border: none;
-
-            border-radius: 6px;
-
-            font-size: 1rem;
-
-            text-decoration: none;
-
-            font-weight: bold;
-
-            transition: background 0.3s ease, transform 0.2s ease;
-
-        }
-
-        .download-btn:hover {
-
-            background: #ff222d;
-
-            transform: translateY(-2px);
-
-        }
-
-        .view-details-btn {
-
-            margin-top: 0.8rem;
-
-            background: transparent;
-
-            border: 2px solid #e50914; /* Thicker border */
-
-            color: #e50914;
-
-            padding: 0.6rem 1.2rem;
-
-            border-radius: 6px;
-
-            cursor: pointer;
-
-            font-weight: bold;
-
-            font-size: 0.95rem;
-
-            transition: background 0.3s ease, color 0.3s ease;
-
-        }
-
-        .view-details-btn:hover {
-
-            background: #e50914;
-
-            color: white;
-
-        }
-
-        .pagination {
-
-            text-align: center;
-
-            margin: 2rem 0;
-
-            grid-column: 1 / -1; /* Span across all columns in grid */
-
-        }
-
-        .pagination button {
-
-            background: #e50914;
-
-            color: white;
-
-            padding: 0.8rem 2rem;
-
-            border: none;
-
-            border-radius: 6px;
-
-            font-size: 1.1rem;
-
-            cursor: pointer;
-
-            font-weight: bold;
-
-            transition: background 0.3s ease, transform 0.2s ease;
-
-        }
-
-        .pagination button:hover {
-
-            background: #ff222d;
-
-            transform: translateY(-2px);
-
-        }
-
-
-
-        /* Movie Detail View Specific Styles */
-
-        .movie-detail-view {
-
-            background: #1f1f1f;
-
-            border-radius: 12px;
-
-            padding: 2rem;
-
-            margin: 2rem auto; /* Center the detail view */
-
-            max-width: 800px; /* Max width for readability */
-
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-
-            text-align: left; /* Align text left within detail view */
-
-        }
-
-        .movie-detail-view img {
-
-            display: block;
-
-            margin: 0 auto 1.5rem auto;
-
-            max-width: 350px; /* Larger image for detail */
-
-            border-radius: 10px;
-
-        }
-
-        .movie-detail-view h2 {
-
-            text-align: center;
-
-            font-size: 2rem;
-
-            margin-bottom: 1rem;
-
-        }
-
-        .movie-detail-view p {
-
-            line-height: 1.6;
-
-            margin-bottom: 1rem;
-
-        }
-
-        .movie-detail-view .download-btn {
-
-            display: block; /* Make download button full width */
-
-            text-align: center;
-
-            margin: 1.5rem auto 1rem auto;
-
-            max-width: 200px;
-
-        }
-
-        .movie-detail-view .view-details-btn { /* Back button */
-
-            display: block;
-
-            margin: 1rem auto 0 auto;
-
-            max-width: 200px;
-
-            text-align: center;
-
-        }
-
-
-
-        /* Responsive adjustments */
-
-        @media (max-width: 768px) {
-
-            .container {
-
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust for smaller screens */
-
-                padding: 1rem;
-
-            }
-
-            .movie {
-
-                padding: 1rem;
-
-            }
-
-            .movie h2 {
-
-                font-size: 1.1rem;
-
-            }
-
-            nav {
-
-                flex-wrap: wrap; /* Allow nav items to wrap */
-
-                gap: 1rem;
-
-                margin: 0.5rem;
-
-            }
-
-            .movie-detail-view {
-
-                padding: 1.5rem;
-
-                margin: 1rem;
-
-            }
-
-            .movie-detail-view img {
-
-                max-width: 80%;
-
-            }
-
-        }
-
-    </style>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Daily Movie Updates</title>
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #f5f5f5;
+        }
+        header {
+            background-color: #e50914;
+            padding: 1rem;
+            text-align: center;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+            color: #fff;
+        }
+        nav {
+            background: #1f1f1f;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem 0;
+            border-radius: 8px;
+            margin: 1rem;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #e50914;
+            color: #fff;
+        }
+        .container {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        .movie {
+            background: #1f1f1f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+        .movie:hover {
+            transform: translateY(-5px);
+        }
+        .movie img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+        .movie h2 {
+            margin: 0.5rem 0;
+            font-size: 1.3rem;
+            color: #e50914;
+        }
+        .download-btn {
+            margin-top: 1rem;
+            display: inline-block;
+            background: #e50914;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .download-btn:hover {
+            background: #ff222d;
+            transform: translateY(-2px);
+        }
+        .view-details-btn {
+            margin-top: 0.8rem;
+            background: transparent;
+            border: 2px solid #e50914;
+            color: #e50914;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        .view-details-btn:hover {
+            background: #e50914;
+            color: white;
+        }
+        .pagination {
+            text-align: center;
+            margin: 2rem 0;
+            grid-column: 1 / -1;
+        }
+        .pagination button {
+            background: #e50914;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .pagination button:hover {
+            background: #ff222d;
+            transform: translateY(-2px);
+        }
+        .movie-detail-view {
+            background: #1f1f1f;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-align: left;
+        }
+        .movie-detail-view img {
+            display: block;
+            margin: 0 auto 1.5rem auto;
+            max-width: 350px;
+            border-radius: 10px;
+        }
+        .movie-detail-view h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .movie-detail-view p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .movie-detail-view .download-btn {
+            display: block;
+            text-align: center;
+            margin: 1.5rem auto 1rem auto;
+            max-width: 200px;
+        }
+        .movie-detail-view .view-details-btn {
+            display: block;
+            margin: 1rem auto 0 auto;
+            max-width: 200px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                padding: 1rem;
+            }
+            .movie {
+                padding: 1rem;
+            }
+            .movie h2 {
+                font-size: 1.1rem;
+            }
+            nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+                margin: 0.5rem;
+            }
+            .movie-detail-view {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            .movie-detail-view img {
+                max-width: 80%;
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-
-    <header>
-
-        <h1>🎬 Daily Movie Updates</h1>
-
-    </header>
-
-
-
-    <nav>
-
-        <a id="nav-all">All</a>
-
-        <a id="nav-hollywood">Hollywood</a>
-
-        <a id="nav-bollywood">Bollywood</a>
-
-        <a id="nav-bangla">Bangla</a>
-
-    </nav>
-
-
-
-    <div class="container" id="movie-container"></div>
-
-
-
-    <div class="pagination">
-
-        <button id="next-btn">Next</button>
-
-    </div>
-
-
-
-    <script>
-    const movies = [
-        { title: "Jongli 2025 Full HD Movie", year: "2025", desc: "A troubled university student, haunted by family trauma and heartbreak, descends into isolation--until an unexpected bond with a little girl forces him to confront his pain and choose between redemption or remaining lost. Director: Iam Ahmed, Noireeta Hasin, Roudromoyee, Shabnam Bubl", category: "Bangla", img: "https://tds-images.thedailystar.net/sites/default/files/styles/medium_204/public/images/2024/05/28/jongli_poster.jpg", download: "https://t.me/c/2198234076/212" },
-        { title: "Daagi 2025 Full HD Movie", year: "2025", desc: "Despite his father's advice to work honestly, middle-class Nishan rejects steady employment and seeks quick wealth through risky means.", category: "Bangla", img: "https://upload.wikimedia.org/wikipedia/en/thumb/e/e0/Daagi_%282025_film%29.jpg/250px-Daagi_%282025_film%29.jpg", download: "#" },
-        { title: "Bhavani Ward 1997 2025 Full HD Movie", year: "2025", desc: "Bhavani Ward 1997 2025 Full HD Movie", category: "Hollywood", img: "https://images2.imgbox.com/e3/cf/GZRzzpVb_o.jpg", download: "#" },
-        { title: "The Batman", year: "2022", desc: "Batman ventures into Gotham’s underworld.", category: "Hollywood", img: "https://i.imgur.com/Zi6v09X.jpg", download: "#" },
-        { title: "Oppenheimer", year: "2023", desc: "The story of J. Robert Oppenheimer.", category: "Hollywood", img: "https://i.imgur.com/FkJYkAI.jpg", download: "#" },
-        { title: "RRR", year: "2022", desc: "Two revolutionaries fight for their country.", category: "Bollywood", img: "https://i.imgur.com/4M7DG9c.jpg", download: "#" },
-        { title: "KGF Chapter 2", year: "2022", desc: "Rocky fights oppression at KGF.", category: "Bollywood", img: "https://i.imgur.com/q9RAmnh.jpg", download: "#" },
-        { title: "Mirzapur", year: "2018", desc: "A crime thriller in India.", category: "Bangla", img: "https://i.imgur.com/EkKtZzB.jpg", download: "#" },
-        { title: "Pushpa", year: "2021", desc: "A laborer rises in a smuggling syndicate.", category: "Bollywood", img: "https://i.imgur.com/XlRfrOl.jpg", download: "#" },
-        { title: "Inception", year: "2010", desc: "A thief who steals secrets via dreams.", category: "Hollywood", img: "https://i.imgur.com/Kh9O5AQ.jpg", download: "#" },
-        { title: "Dune", year: "2021", desc: "Paul Atreides fights for planet Arrakis.", category: "Hollywood", img: "https://i.imgur.com/V5POslk.jpg", download: "#" },
-        { title: "The Dark Knight", year: "2008", desc: "Batman fights Gotham's criminal underworld.", category: "Hollywood", img: "https://i.imgur.com/D2CdrBa.jpg", download: "#" },
-        { title: "Jawan", year: "2023", desc: "A man exposes corruption in society.", category: "Bollywood", img: "https://i.imgur.com/CqV8FZP.jpg", download: "#" },
-        { title: "Spider-Man: No Way Home", year: "2021", desc: "Peter Parker seeks help from Doctor Strange.", category: "Hollywood", img: "https://i.imgur.com/4bmrrA4.jpg", download: "#" }
-    ];
-
-    let currentIndex = 0;
-    const limit = 6;
-    let filteredMovies = [...movies];
-    const container = document.getElementById("movie-container");
-    const nextBtn = document.getElementById("next-btn");
-    const gitHubPagesBasePath = "/MovieBD99";
-    const isCanvasPreview = window.location.protocol === 'blob:';
-
-    function generateSlug(title) {
-        return title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-    }
-
-    function displayMovies() {
-        const nextBatch = filteredMovies.slice(currentIndex, currentIndex + limit);
-        nextBatch.forEach((movie) => {
-            const div = document.createElement("div");
-            div.className = "movie";
-            div.innerHTML = `
-                <img src="${movie.img}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://placehold.co/300x450/333333/FFFFFF?text=Image+Not+Found';" />
-                <h2>${movie.title}</h2>
-                <button class="view-details-btn">View Details</button>
-            `;
-            const btn = div.querySelector(".view-details-btn");
-            btn.addEventListener("click", () => {
-                const urlSlug = generateSlug(movie.title);
-                const newPath = gitHubPagesBasePath + "/" + urlSlug;
-                if (!isCanvasPreview) {
-                    history.pushState({ movieTitle: movie.title }, movie.title, newPath);
-                }
-                showMovieDetails(movie.title);
-            });
-            container.appendChild(div);
-        });
-        currentIndex += limit;
-        nextBtn.style.display = currentIndex >= filteredMovies.length ? "none" : "inline-block";
-    }
-
-    function updateNavLinks() {
-        const navLinks = [
-            { id: 'nav-all', category: 'All' },
-            { id: 'nav-hollywood', category: 'Hollywood' },
-            { id: 'nav-bollywood', category: 'Bollywood' },
-            { id: 'nav-bangla', category: 'Bangla' }
+    <header>
+        <h1>🎬 Daily Movie Updates</h1>
+    </header>
+    <nav>
+        <a id="nav-all">All</a>
+        <a id="nav-hollywood">Hollywood</a>
+        <a id="nav-bollywood">Bollywood</a>
+        <a id="nav-bangla">Bangla</a>
+    </nav>
+    <div class="container" id="movie-container"></div>
+    <div class="pagination">
+        <button id="next-btn">Next</button>
+    </div>
+    <script>
+        const movies = [
+            { title: "Jongli 2025 Full HD Movie", year: "2025", desc: "A troubled university student, haunted by family trauma and heartbreak, descends into isolation--until an unexpected bond with a little girl forces him to confront his pain and choose between redemption or remaining lost. Director: Iam Ahmed, Noireeta Hasin, Roudromoyee, Shabnam Bubl", category: "Bangla", img: "https://tds-images.thedailystar.net/sites/default/files/styles/medium_204/public/images/2024/05/28/jongli_poster.jpg", download: "https://t.me/c/2198234076/212" },
+            { title: "Daagi 2025 Full HD Movie", year: "2025", desc: "Despite his father's advice to work honestly, middle-class Nishan rejects steady employment and seeks quick wealth through risky means.", category: "Bangla", img: "https://upload.wikimedia.org/wikipedia/en/thumb/e/e0/Daagi_%282025_film%29.jpg/250px-Daagi_%282025_film%29.jpg", download: "#" },
+            { title: "Rajbanshi Comedy: Jamai Shoshur 420", year: "2024", desc: "A hilarious Rajbanshi comedy skit about the funny antics between a son-in-law and father-in-law, filled with local humor and cultural references.", category: "Bangla", img: "https://i.imgur.com/placeholder.jpg", download: "#" },
+            { title: "Bhavani Ward 1997 2025 Full HD Movie", year: "2025", desc: "Bhavani Ward 1997 2025 Full HD Movie", category: "Hollywood", img: "https://images2.imgbox.com/e3/cf/GZRzzpVb_o.jpg", download: "#" },
+            { title: "The Batman", year: "2022", desc: "Batman ventures into Gotham’s underworld.", category: "Hollywood", img: "https://i.imgur.com/Zi6v09X.jpg", download: "#" },
+            { title: "Oppenheimer", year: "2023", desc: "The story of J. Robert Oppenheimer.", category: "Hollywood", img: "https://i.imgur.com/FkJYkAI.jpg", download: "#" },
+            { title: "RRR", year: "2022", desc: "Two revolutionaries fight for their country.", category: "Bollywood", img: "https://i.imgur.com/4M7DG9c.jpg", download: "#" },
+            { title: "KGF Chapter 2", year: "2022", desc: "Rocky fights oppression at KGF.", category: "Bollywood", img: "https://i.imgur.com/q9RAmnh.jpg", download: "#" },
+            { title: "Mirzapur", year: "2018", desc: "A crime thriller in India.", category: "Bangla", img: "https://i.imgur.com/EkKtZzB.jpg", download: "#" },
+            { title: "Pushpa", year: "2021", desc: "A laborer rises in a smuggling syndicate.", category: "Bollywood", img: "https://i.imgur.com/XlRfrOl.jpg", download: "#" },
+            { title: "Inception", year: "2010", desc: "A thief who steals secrets via dreams.", category: "Hollywood", img: "https://i.imgur.com/Kh9O5AQ.jpg", download: "#" },
+            { title: "Dune", year: "2021", desc: "Paul Atreides fights for planet Arrakis.", category: "Hollywood", img: "https://i.imgur.com/V5POslk.jpg", download: "#" },
+            { title: "The Dark Knight", year: "2008", desc: "Batman fights Gotham's criminal underworld.", category: "Hollywood", img: "https://i.imgur.com/D2CdrBa.jpg", download: "#" },
+            { title: "Jawan", year: "2023", desc: "A man exposes corruption in society.", category: "Bollywood", img: "https://i.imgur.com/CqV8FZP.jpg", download: "#" },
+            { title: "Spider-Man: No Way Home", year: "2021", desc: "Peter Parker seeks help from Doctor Strange.", category: "Hollywood", img: "https://i.imgur.com/4bmrrA4.jpg", download: "#" }
         ];
-        navLinks.forEach(link => {
-            document.getElementById(link.id).addEventListener('click', (e) => {
-                e.preventDefault();
-                const newPath = gitHubPagesBasePath + "/";
-                if (!isCanvasPreview) {
-                    history.pushState({ filterCategory: link.category }, `${link.category} Movies`, newPath);
-                }
-                filterMovies(link.category);
+
+        let currentIndex = 0;
+        const limit = 6;
+        let filteredMovies = [...movies];
+        const container = document.getElementById("movie-container");
+        const nextBtn = document.getElementById("next-btn");
+        const gitHubPagesBasePath = "/MovieBD99";
+        const isCanvasPreview = window.location.protocol === 'blob:';
+
+        function generateSlug(title) {
+            return title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+        }
+
+        function displayMovies() {
+            const nextBatch = filteredMovies.slice(currentIndex, currentIndex + limit);
+            nextBatch.forEach((movie) => {
+                const div = document.createElement("div");
+                div.className = "movie";
+                div.innerHTML = `
+                    <img src="${movie.img}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://placehold.co/300x450/333333/FFFFFF?text=Image+Not+Found';" />
+                    <h2>${movie.title}</h2>
+                    <button class="view-details-btn">View Details</button>
+                `;
+                const btn = div.querySelector(".view-details-btn");
+                btn.addEventListener("click", () => {
+                    const urlSlug = generateSlug(movie.title);
+                    const newPath = gitHubPagesBasePath + "/" + urlSlug;
+                    if (!isCanvasPreview) {
+                        history.pushState({ movieTitle: movie.title }, movie.title, newPath);
+                    }
+                    showMovieDetails(movie.title);
+                });
+                container.appendChild(div);
             });
-        });
-    }
+            currentIndex += limit;
+            nextBtn.style.display = currentIndex >= filteredMovies.length ? "none" : "inline-block";
+        }
 
-    function filterMovies(category) {
-        container.innerHTML = '';
-        currentIndex = 0;
-        document.title = `Daily Movie Updates - ${category}`;
-        filteredMovies = category === "All" ? [...movies] : movies.filter(movie => movie.category === category);
-        displayMovies();
-        nextBtn.style.display = currentIndex < filteredMovies.length && filteredMovies.length > limit ? "inline-block" : "none";
-    }
+        function updateNavLinks() {
+            const navLinks = [
+                { id: 'nav-all', category: 'All' },
+                { id: 'nav-hollywood', category: 'Hollywood' },
+                { id: 'nav-bollywood', category: 'Bollywood' },
+                { id: 'nav-bangla', category: 'Bangla' }
+            ];
+            navLinks.forEach(link => {
+                document.getElementById(link.id).addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const newPath = gitHubPagesBasePath + "/";
+                    if (!isCanvasPreview) {
+                        history.pushState({ filterCategory: link.category }, `${link.category} Movies`, newPath);
+                    }
+                    filterMovies(link.category);
+                });
+            });
+        }
 
-    function showMovieDetails(title) {
-        container.innerHTML = '';
-        nextBtn.style.display = 'none';
-        const movie = movies.find(m => m.title === title);
-        if (!movie) {
-            container.innerHTML = `
-                <div class="movie-detail-view" style="text-align: center;">
-                    <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">Movie not found or invalid URL.</p>
-                    <button id="backFromNotFound" class="view-details-btn">Back to Movie List</button>
-                </div>
+        function filterMovies(category) {
+            container.innerHTML = '';
+            currentIndex = 0;
+            document.title = `Daily Movie Updates - ${category}`;
+            filteredMovies = category === "All" ? [...movies] : movies.filter(movie => movie.category === category);
+            displayMovies();
+            nextBtn.style.display = currentIndex < filteredMovies.length && filteredMovies.length > limit ? "inline-block" : "none";
+        }
+
+        function showMovieDetails(title) {
+            container.innerHTML = '';
+            nextBtn.style.display = 'none';
+            const movie = movies.find(m => m.title === title);
+            if (!movie) {
+                container.innerHTML = `
+                    <div class="movie-detail-view" style="text-align: center;">
+                        <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">Movie not found or invalid URL.</p>
+                        <button id="backFromNotFound" class="view-details-btn">Back to Movie List</button>
+                    </div>
+                `;
+                document.title = "Movie Not Found";
+                document.getElementById("backFromNotFound").addEventListener("click", () => {
+                    const newPath = gitHubPagesBasePath + "/";
+                    if (!isCanvasPreview) {
+                        history.pushState({ filterCategory: 'All' }, "Movie List", newPath);
+                    }
+                    filterMovies('All');
+                });
+                return;
+            }
+
+            document.title = `${movie.title} - Details`;
+            const div = document.createElement("div");
+            div.className = "movie-detail-view";
+            div.innerHTML = `
+                <img src="${movie.img}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://placehold.co/350x500/333333/FFFFFF?text=Image+Not+Found';" />
+                <h2>${movie.title}</h2>
+                <p><strong>Release Date:</strong> ${movie.year}</p>
+                <p>${movie.desc}</p>
+                <a href="${movie.download}" class="download-btn" download>⬇️ Download</a>
             `;
-            document.title = "Movie Not Found";
-            document.getElementById("backFromNotFound").addEventListener("click", () => {
+            const backBtn = document.createElement("button");
+            backBtn.textContent = "Back to Movie List";
+            backBtn.className = "view-details-btn";
+            backBtn.addEventListener("click", () => {
                 const newPath = gitHubPagesBasePath + "/";
                 if (!isCanvasPreview) {
                     history.pushState({ filterCategory: 'All' }, "Movie List", newPath);
                 }
                 filterMovies('All');
             });
-            return;
+            div.appendChild(backBtn);
+            container.appendChild(div);
         }
 
-        document.title = `${movie.title} - Details`;
-        const div = document.createElement("div");
-        div.className = "movie-detail-view";
-        div.innerHTML = `
-            <img src="${movie.img}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://placehold.co/350x500/333333/FFFFFF?text=Image+Not+Found';" />
-            <h2>${movie.title}</h2>
-            <p><strong>Release Date:</strong> ${movie.year}</p>
-            <p>${movie.desc}</p>
-            <a href="${movie.download}" class="download-btn" download>⬇️ Download</a>
-        `;
-        const backBtn = document.createElement("button");
-        backBtn.textContent = "Back to Movie List";
-        backBtn.className = "view-details-btn";
-        backBtn.addEventListener("click", () => {
-            const newPath = gitHubPagesBasePath + "/";
-            if (!isCanvasPreview) {
-                history.pushState({ filterCategory: 'All' }, "Movie List", newPath);
+        window.addEventListener("popstate", (event) => {
+            if (event.state?.movieTitle) {
+                showMovieDetails(event.state.movieTitle);
+            } else if (event.state?.filterCategory) {
+                filterMovies(event.state.filterCategory);
+            } else {
+                filterMovies('All');
             }
-            filterMovies('All');
         });
-        div.appendChild(backBtn);
-        container.appendChild(div);
-    }
 
-    window.addEventListener("popstate", (event) => {
-        if (event.state?.movieTitle) {
-            showMovieDetails(event.state.movieTitle);
-        } else if (event.state?.filterCategory) {
-            filterMovies(event.state.filterCategory);
-        } else {
-            filterMovies('All');
-        }
-    });
-
-    function handleRouteChange() {
-        const currentPath = window.location.pathname;
-        let slug = currentPath.startsWith(gitHubPagesBasePath) ? currentPath.substring(gitHubPagesBasePath.length) : currentPath;
-        if (slug.startsWith('/')) slug = slug.substring(1);
-
-        // Handle redirect from 404.html
-        const urlParams = new URLSearchParams(window.location.search);
-        const redirectedPath = urlParams.get('p');
-        if (redirectedPath) {
-            slug = redirectedPath.startsWith(gitHubPagesBasePath) ? redirectedPath.substring(gitHubPagesBasePath.length) : redirectedPath;
+        function handleRouteChange() {
+            const currentPath = window.location.pathname;
+            let slug = currentPath.startsWith(gitHubPagesBasePath) ? currentPath.substring(gitHubPagesBasePath.length) : currentPath;
             if (slug.startsWith('/')) slug = slug.substring(1);
-            if (!isCanvasPreview) {
-                history.replaceState(null, '', gitHubPagesBasePath + (slug ? `/${slug}` : '/'));
+
+            // Handle redirect from 404.html
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirectedPath = urlParams.get('p');
+            if (redirectedPath) {
+                slug = redirectedPath.startsWith(gitHubPagesBasePath) ? redirectedPath.substring(gitHubPagesBasePath.length) : redirectedPath;
+                if (slug.startsWith('/')) slug = slug.substring(1);
+                if (!isCanvasPreview) {
+                    history.replaceState(null, '', gitHubPagesBasePath + (slug ? `/${slug}` : '/'));
+                }
             }
+
+            if (slug) {
+                const movie = movies.find(m => generateSlug(m.title) === slug);
+                if (movie) {
+                    showMovieDetails(movie.title);
+                    return;
+                }
+            }
+            filterMovies('All');
         }
 
-        if (slug) {
-            const movie = movies.find(m => generateSlug(m.title) === slug);
-            if (movie) {
-                showMovieDetails(movie.title);
-                return;
-            }
+        function init() {
+            updateNavLinks();
+            handleRouteChange();
+            nextBtn.addEventListener("click", () => {
+                displayMovies();
+            });
         }
-        filterMovies('All');
-    }
 
-    function init() {
-        updateNavLinks();
-        handleRouteChange();
-        nextBtn.addEventListener("click", () => {
-            displayMovies();
-        });
-    }
-
-    init();
-</script>
-
+        init();
+    </script>
 </body>
-
-</html> 
+</html>
