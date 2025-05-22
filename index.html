@@ -1,526 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Daily Movie Updates</title>
-    <style>
-        body {
-            font-family: 'Inter', Arial, sans-serif; /* Using Inter font */
-            margin: 0;
-            padding: 0;
-            background: #121212;
-            color: #f5f5f5;
-        }
-        header {
-            background-color: #e50914;
-            padding: 1rem;
-            text-align: center;
-            border-bottom-left-radius: 8px; /* Rounded corners */
-            border-bottom-right-radius: 8px;
-        }
-        h1 {
-            margin: 0;
-            font-size: 2rem;
-            color: #fff;
-        }
-        nav {
-            background: #1f1f1f;
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            padding: 1rem 0;
-            border-radius: 8px; /* Rounded corners */
-            margin: 1rem;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        nav a:hover {
-            background-color: #e50914;
-            color: #fff;
-        }
-        .container {
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
-            gap: 1.5rem;
-            justify-content: center; /* Center items in grid */
-        }
-        .movie {
-            background: #1f1f1f;
-            border-radius: 12px; /* More rounded corners */
-            padding: 1.5rem;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-            transition: transform 0.2s ease-in-out;
-        }
-        .movie:hover {
-            transform: translateY(-5px); /* Lift effect on hover */
-        }
-        .movie img {
-            width: 100%;
-            max-width: 250px; /* Slightly smaller for better fit */
-            height: auto; /* Maintain aspect ratio */
-            border-radius: 8px; /* Rounded image corners */
-            margin-bottom: 1rem;
-            object-fit: cover; /* Ensure images cover their area */
-        }
-        .movie h2 {
-            margin: 0.5rem 0;
-            font-size: 1.3rem;
-            color: #e50914; /* Highlight movie titles */
-        }
-        .download-btn {
-            margin-top: 1rem;
-            display: inline-block;
-            background: #e50914;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-        .download-btn:hover {
-            background: #ff222d;
-            transform: translateY(-2px);
-        }
-        .view-details-btn {
-            margin-top: 0.8rem;
-            background: transparent;
-            border: 2px solid #e50914; /* Thicker border */
-            color: #e50914;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-        .view-details-btn:hover {
-            background: #e50914;
-            color: white;
-        }
-        .pagination {
-            text-align: center;
-            margin: 2rem 0;
-            grid-column: 1 / -1; /* Span across all columns in grid */
-        }
-        .pagination button {
-            background: #e50914;
-            color: white;
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-        .pagination button:hover {
-            background: #ff222d;
-            transform: translateY(-2px);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Movie Updates</title>
+  <style>
+    /* Basic styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f8f9fa;
+    }
+    h1 {
+      text-align: center;
+      color: #343a40;
+    }
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .filter-buttons button {
+      padding: 10px 15px;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .filter-buttons button:hover {
+      background: #0056b3;
+    }
+    .movie-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+    .movie-card {
+      background: white;
+      padding: 10px;
+      border-radius: 5px;
+      width: 250px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .movie-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+    .movie-card h3 {
+      margin: 10px 0 5px;
+      font-size: 1.1em;
+    }
+    .movie-card p {
+      margin: 5px 0;
+      font-size: 0.9em;
+    }
+    .movie-card button {
+      margin-top: 10px;
+      background: #28a745;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .movie-card button:hover {
+      background: #218838;
+    }
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .pagination button {
+      padding: 10px 20px;
+      font-size: 1em;
+    }
 
-        /* Movie Detail View Specific Styles */
-        .movie-detail-view {
-            background: #1f1f1f;
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem auto; /* Center the detail view */
-            max-width: 800px; /* Max width for readability */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            text-align: left; /* Align text left within detail view */
-        }
-        .movie-detail-view img {
-            display: block;
-            margin: 0 auto 1.5rem auto;
-            max-width: 350px; /* Larger image for detail */
-            border-radius: 10px;
-        }
-        .movie-detail-view h2 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .movie-detail-view p {
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-        .movie-detail-view .download-btn {
-            display: block; /* Make download button full width */
-            text-align: center;
-            margin: 1.5rem auto 1rem auto;
-            max-width: 200px;
-        }
-        .movie-detail-view .view-details-btn { /* Back button */
-            display: block;
-            margin: 1rem auto 0 auto;
-            max-width: 200px;
-            text-align: center;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust for smaller screens */
-                padding: 1rem;
-            }
-            .movie {
-                padding: 1rem;
-            }
-            .movie h2 {
-                font-size: 1.1rem;
-            }
-            nav {
-                flex-wrap: wrap; /* Allow nav items to wrap */
-                gap: 1rem;
-                margin: 0.5rem;
-            }
-            .movie-detail-view {
-                padding: 1.5rem;
-                margin: 1rem;
-            }
-            .movie-detail-view img {
-                max-width: 80%;
-            }
-        }
-    </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .modal-content img {
+      width: 100%;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .close-btn {
+      margin-top: 15px;
+      background: #dc3545;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>🎬 Daily Movie Updates</h1>
-    </header>
 
-    <nav>
-        <a id="nav-all">All</a>
-        <a id="nav-hollywood">Hollywood</a>
-        <a id="nav-bollywood">Bollywood</a>
-        <a id="nav-bangla">Bangla</a>
-    </nav>
+  <h1>Daily Movie Updates</h1>
+  
+  <div class="filter-buttons">
+    <button onclick="filterMovies('All')">All</button>
+    <button onclick="filterMovies('Hollywood')">Hollywood</button>
+    <button onclick="filterMovies('Bollywood')">Bollywood</button>
+    <button onclick="filterMovies('Bangla')">Bangla</button>
+  </div>
 
-    <div class="container" id="movie-container"></div>
+  <div class="movie-container" id="movieContainer"></div>
 
-    <div class="pagination">
-        <button id="next-btn">Next</button>
+  <div class="pagination">
+    <button onclick="loadMore()">Next</button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="movieModal">
+    <div class="modal-content" id="modalContent">
+      <img id="modalImage" src="" alt="Movie Poster">
+      <h3 id="modalTitle"></h3>
+      <p id="modalCategory"></p>
+      <p id="modalDescription"></p>
+      <button class="close-btn" onclick="closeModal()">Close</button>
     </div>
+  </div>
 
-    <script>
-        const movies = [
-            { title: "Jongli 2025 Full HD Movie", year: "2025", desc: "A troubled university student, haunted by family trauma and heartbreak, descends into isolation--until an unexpected bond with a little girl forces him to confront his pain and choose between redemption or remaining lost.Director iam AhmedNoireeta Hasin RoudromoyeeShabnam Bubl", category: "Bangla", img: "https://tds-images.thedailystar.net/sites/default/files/styles/medium_204/public/images/2024/05/28/jongli_poster.jpg", download: "https://t.me/c/2198234076/212" },
-            { title: "Daagi 2025 Full HD Movie", year: "2025", desc: "Despite his father's advice to work honestly, middle-class Nishan rejects steady employment and seeks quick wealth through risky means.", category: "Bangla", img: "https://upload.wikimedia.org/wikipedia/en/thumb/e/e0/Daagi_%282025_film%29.jpg/250px-Daagi_%282025_film%29.jpg", download: "#" },
-            { title: "Bhavani Ward 1997 2025 Full HD Movie", year: "2025", desc: "Bhavani Ward 1997 2025 Full HD Movie", category: "Hollywood", img: "https://images2.imgbox.com/e3/cf/GZRzzpVb_o.jpg ", download: "#" },
-            { title: "The Batman", year: "2022", desc: "Batman ventures into Gotham’s underworld.", category: "Hollywood", img: "https://i.imgur.com/Zi6v09X.jpg", download: "#" },
-            { title: "Oppenheimer", year: "2023", desc: "The story of J. Robert Oppenheimer.", category: "Hollywood", img: "https://i.imgur.com/FkJYkAI.jpg", download: "#" },
-            { title: "RRR", year: "2022", desc: "Two revolutionaries fight for their country.", category: "Bollywood", img: "https://i.imgur.com/4M7DG9c.jpg", download: "#" },
-            { title: "KGF Chapter 2", year: "2022", desc: "Rocky fights oppression at KGF.", category: "Bollywood", img: "https://i.imgur.com/q9RAmnh.jpg", download: "#" },
-            { title: "Mirzapur", year: "2018", desc: "A crime thriller in India.", category: "Bangla", img: "https://i.imgur.com/EkKtZzB.jpg", download: "#" },
-            { title: "Pushpa", year: "2021", desc: "A laborer rises in a smuggling syndicate.", category: "Bollywood", img: "https://i.imgur.com/XlRfrOl.jpg", download: "#" },
-            { title: "Inception", year: "2010", desc: "A thief who steals secrets via dreams.", category: "Hollywood", img: "https://i.imgur.com/Kh9O5AQ.jpg", download: "#" },
-            { title: "Dune", year: "2021", desc: "Paul Atreides fights for planet Arrakis.", category: "Hollywood", img: "https://i.imgur.com/V5POslk.jpg", download: "#" },
-            { title: "The Dark Knight", year: "2008", desc: "Batman fights Gotham's criminal underworld.", category: "Hollywood", img: "https://i.imgur.com/D2CdrBa.jpg", download: "#" },
-            { title: "Jawan", year: "2023", desc: "A man exposes corruption in society.", category: "Bollywood", img: "https://i.imgur.com/CqV8FZP.jpg", download: "#" },
-            { title: "Spider-Man: No Way Home", year: "2021", desc: "Peter Parker seeks help from Doctor Strange.", category: "Hollywood", img: "https://i.imgur.com/4bmrrA4.jpg", download: "#" }
-        ];
+  <script>
+    const movies = [
+      { title: "Inception", category: "Hollywood", image: "https://via.placeholder.com/250x350?text=Inception", description: "A mind-bending thriller by Christopher Nolan." },
+      { title: "3 Idiots", category: "Bollywood", image: "https://via.placeholder.com/250x350?text=3+Idiots", description: "A comedy-drama about the Indian education system." },
+      { title: "Hawa", category: "Bangla", image: "https://via.placeholder.com/250x350?text=Hawa", description: "A romantic drama film from Bangladesh." },
+      { title: "The Dark Knight", category: "Hollywood", image: "https://via.placeholder.com/250x350?text=The+Dark+Knight", description: "A Batman movie with a legendary Joker." },
+      { title: "Dangal", category: "Bollywood", image: "https://via.placeholder.com/250x350?text=Dangal", description: "A wrestling drama based on a true story." },
+      { title: "Poran", category: "Bangla", image: "https://via.placeholder.com/250x350?text=Poran", description: "A Bangladeshi romantic action thriller." },
+      // Add more as needed...
+    ];
 
-        let currentIndex = 0;
-        const limit = 6;
-        let filteredMovies = [...movies];
-        const container = document.getElementById("movie-container");
-        const nextBtn = document.getElementById("next-btn");
+    let currentPage = 0;
+    const pageSize = 4;
+    let currentFilter = "All";
 
-        // --- CRITICAL: Define your base path ---
-        // This MUST match your GitHub Pages repository name.
-        // If your site is at https://username.github.io/RepoName/
-        // const gitHubPagesBasePath = "/RepoName";
-        // If your site is at https://username.github.io/ (repo named username.github.io)
-        // const gitHubPagesBasePath = "";
-        const gitHubPagesBasePath = "/MovieBD99"; // Assuming your repo is MovieBD99
+    function renderMovies() {
+      const container = document.getElementById("movieContainer");
+      container.innerHTML = "";
 
-        // Determine if we are in the Canvas preview environment (blob: URL)
-        const isCanvasPreview = window.location.protocol === 'blob:';
+      let filtered = currentFilter === "All" ? movies : movies.filter(m => m.category === currentFilter);
+      let paginated = filtered.slice(0, (currentPage + 1) * pageSize);
 
-        /**
-         * Generates a URL-friendly slug from a movie title.
-         * @param {string} title - The movie title.
-         * @returns {string} The generated slug.
-         */
-        function generateSlug(title) {
-            // Convert to lowercase, replace spaces with hyphens, remove non-alphanumeric characters
-            return title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-        }
+      paginated.forEach((movie, index) => {
+        const card = document.createElement("div");
+        card.className = "movie-card";
+        card.innerHTML = `
+          <img src="${movie.image}" alt="${movie.title}">
+          <h3>${movie.title}</h3>
+          <p>Category: ${movie.category}</p>
+          <button onclick="viewDetails('${movie.title}')">View Details</button>
+        `;
+        container.appendChild(card);
+      });
+    }
 
-        /**
-         * Displays a batch of movies in the container.
-         */
-        function displayMovies() {
-            const nextBatch = filteredMovies.slice(currentIndex, currentIndex + limit);
+    function filterMovies(category) {
+      currentFilter = category;
+      currentPage = 0;
+      renderMovies();
+    }
 
-            // Append new movies to the container
-            nextBatch.forEach((movie) => {
-                const div = document.createElement("div");
-                div.className = "movie";
-                div.innerHTML = `
-                    <img src="${movie.img}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://placehold.co/300x450/333333/FFFFFF?text=Image+Not+Found';" />
-                    <h2>${movie.title}</h2>
-                    <button class="view-details-btn">View Details</button>
-                `;
+    function loadMore() {
+      currentPage++;
+      renderMovies();
+    }
 
-                const btn = div.querySelector(".view-details-btn");
-                btn.addEventListener("click", () => {
-                    const urlSlug = generateSlug(movie.title);
-                    // Construct the path relative to the GitHub Pages base path
-                    const newPath = gitHubPagesBasePath + "/" + urlSlug;
+    function viewDetails(title) {
+      const movie = movies.find(m => m.title === title);
+      if (movie) {
+        document.getElementById("modalImage").src = movie.image;
+        document.getElementById("modalTitle").innerText = movie.title;
+        document.getElementById("modalCategory").innerText = `Category: ${movie.category}`;
+        document.getElementById("modalDescription").innerText = movie.description;
+        document.getElementById("movieModal").style.display = "flex";
+      }
+    }
 
-                    // Only use pushState if not in the Canvas preview environment
-                    if (!isCanvasPreview) {
-                        history.pushState({ movieTitle: movie.title }, movie.title, newPath);
-                    }
-                    showMovieDetails(movie.title);
-                });
-                container.appendChild(div);
-            });
+    function closeModal() {
+      document.getElementById("movieModal").style.display = "none";
+    }
 
-            // Update current index for next pagination
-            currentIndex += limit;
-            // Show/hide next button based on remaining movies
-            if (currentIndex >= filteredMovies.length) {
-                nextBtn.style.display = "none";
-            } else {
-                nextBtn.style.display = "inline-block";
-            }
-        }
+    renderMovies();
+  </script>
 
-        /**
-         * Updates navigation links to use event listeners and pushState.
-         */
-        function updateNavLinks() {
-            document.getElementById('nav-all').addEventListener('click', (e) => {
-                e.preventDefault();
-                const newPath = gitHubPagesBasePath + "/";
-                if (!isCanvasPreview) {
-                    history.pushState({ filterCategory: 'All' }, "All Movies", newPath);
-                }
-                filterMovies('All');
-            });
-            document.getElementById('nav-hollywood').addEventListener('click', (e) => {
-                e.preventDefault();
-                const newPath = gitHubPagesBasePath + "/";
-                if (!isCanvasPreview) {
-                    history.pushState({ filterCategory: 'Hollywood' }, "Hollywood Movies", newPath);
-                }
-                filterMovies('Hollywood');
-            });
-            document.getElementById('nav-bollywood').addEventListener('click', (e) => {
-                e.preventDefault();
-                const newPath = gitHubPagesBasePath + "/";
-                if (!isCanvasPreview) {
-                    history.pushState({ filterCategory: 'Bollywood' }, "Bollywood Movies", newPath);
-                }
-                filterMovies('Bollywood');
-            });
-            document.getElementById('nav-bangla').addEventListener('click', (e) => {
-                e.preventDefault();
-                const newPath = gitHubPagesBasePath + "/";
-                if (!isCanvasPreview) {
-                    history.pushState({ filterCategory: 'Bangla' }, "Bangla Movies", newPath);
-                }
-                filterMovies('Bangla');
-            });
-        }
-
-        /**
-         * Filters and displays movies based on category.
-         * @param {string} category - The category to filter by ('All', 'Hollywood', etc.).
-         */
-        function filterMovies(category) {
-            container.innerHTML = ''; // Clear container for new list
-            currentIndex = 0; // Reset pagination index
-            document.title = "Daily Movie Updates - " + category; // Update page title
-
-            // Filter movies based on category
-            filteredMovies = category === "All"
-                ? [...movies]
-                : movies.filter(movie => movie.category === category);
-
-            displayMovies(); // Display the first batch of filtered movies
-            // Ensure next button visibility is correct after filtering
-            if (currentIndex < filteredMovies.length && filteredMovies.length > limit) {
-                nextBtn.style.display = "inline-block";
-            } else {
-                nextBtn.style.display = "none";
-            }
-        }
-
-        /**
-         * Displays detailed information for a specific movie.
-         * @param {string} title - The title of the movie to display.
-         */
-        function showMovieDetails(title) {
-            container.innerHTML = ''; // Clear container for detail view
-            nextBtn.style.display = 'none'; // Hide pagination button
-
-            const movie = movies.find(m => m.title === title);
-            if (!movie) {
-                // Display a "Movie not found" message
-                container.innerHTML = `
-                    <div class="movie-detail-view" style="text-align: center;">
-                        <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">Movie not found or invalid URL.</p>
-                        <button id="backFromNotFound" class="view-details-btn">Back to Movie List</button>
-                    </div>
-                `;
-                document.getElementById("backFromNotFound").addEventListener("click", () => {
-                    const newPath = gitHubPagesBasePath + "/";
-                    if (!isCanvasPreview) {
-                        history.pushState({ filterCategory: 'All' }, "Movie List", newPath);
-                    }
-                    filterMovies('All');
-                });
-                document.title = "Movie Not Found";
-                return;
-            }
-
-            document.title = movie.title + " - Details";
-            const div = document.createElement("div");
-            div.className = "movie-detail-view"; // Specific class for styling detail view
-            div.innerHTML = `
-                <img src="${movie.img}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://placehold.co/350x500/333333/FFFFFF?text=Image+Not+Found';" />
-                <h2>${movie.title}</h2>
-                <p><strong>Release Date:</strong> ${movie.year}</p>
-                <p>${movie.desc}</p>
-                <a href="${movie.download}" class="download-btn" download>⬇️ Download</a>
-            `;
-
-            const backBtn = document.createElement("button");
-            backBtn.textContent = "Back to Movie List";
-            backBtn.className = "view-details-btn"; // Reuse styling
-            backBtn.addEventListener("click", () => {
-                // Go back to the main list URL, preserving the filter if possible, otherwise 'All'
-                const newPath = gitHubPagesBasePath + "/";
-                if (!isCanvasPreview) {
-                    history.pushState({ filterCategory: 'All' }, "Movie List", newPath);
-                }
-                filterMovies('All');
-            });
-
-            div.appendChild(backBtn);
-            container.appendChild(div);
-        }
-
-        /**
-         * Handles browser history changes (back/forward buttons).
-         * This function is crucial for making the back/forward buttons work correctly with pushState.
-         */
-        window.addEventListener("popstate", (event) => {
-            // popstate will only fire if pushState was used, so this is implicitly for non-preview environments
-            if (event.state?.movieTitle) {
-                showMovieDetails(event.state.movieTitle);
-            } else if (event.state?.filterCategory) {
-                filterMovies(event.state.filterCategory);
-            } else {
-                filterMovies('All');
-            }
-        });
-
-        /**
-         * Handles the initial route when the page loads or is refreshed.
-         * This is where the 404.html redirect parameter is processed.
-         * @param {object} state - The history state object.
-         */
-        function handleRouteChange(state) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const redirectedPath = urlParams.get('p'); // Check for the 'p' parameter from 404.html
-
-            if (redirectedPath) {
-                // Only clean the URL if not in Canvas preview, as replaceState can also cause issues
-                if (!isCanvasPreview) {
-                    history.replaceState(null, '', window.location.origin + window.location.pathname.split('?')[0]);
-                }
-
-                let slug = redirectedPath.substring(gitHubPagesBasePath.length);
-                if (slug.startsWith('/')) {
-                    slug = slug.substring(1);
-                }
-
-                const movieFoundBySlug = movies.find(m => generateSlug(m.title) === slug);
-                if (movieFoundBySlug) {
-                    showMovieDetails(movieFoundBySlug.title);
-                    return;
-                } else {
-                    console.warn("Movie not found for slug from redirect:", slug);
-                    filterMovies('All');
-                    return;
-                }
-            }
-
-            // If in Canvas preview, for initial load, always default to 'All' movies.
-            // The URL won't change, so we don't need complex path parsing here.
-            if (isCanvasPreview) {
-                filterMovies('All');
-                return;
-            }
-
-            // Normal routing for non-redirected paths or initial load in deployed environment
-            let currentPath = window.location.pathname;
-            let pathForRouting = currentPath;
-
-            // For GitHub Pages, remove the basePath prefix to get the route slug
-            if (currentPath.startsWith(gitHubPagesBasePath)) {
-                pathForRouting = currentPath.substring(gitHubPagesBasePath.length);
-            }
-
-
-            // Now, apply routing logic based on pathForRouting
-            if (pathForRouting === '/' || pathForRouting === '') {
-                if (state && state.filterCategory) {
-                    filterMovies(state.filterCategory);
-                } else {
-                    filterMovies('All');
-                }
-            } else if (pathForRouting.startsWith('/')) {
-                const slug = pathForRouting.substring(1);
-                if (slug) {
-                    const movieFoundBySlug = movies.find(m => generateSlug(m.title) === slug);
-                    if (movieFoundBySlug) {
-                        showMovieDetails(movieFoundBySlug.title);
-                    } else {
-                        console.warn("Movie not found for slug:", slug);
-                        filterMovies('All');
-                    }
-                } else {
-                    filterMovies('All');
-                }
-            } else {
-                filterMovies('All');
-            }
-        }
-
-        /**
-         * Initializes the application.
-         */
-        function init() {
-            updateNavLinks();
-            handleRouteChange(history.state);
-            nextBtn.addEventListener("click", () => {
-                displayMovies();
-            });
-        }
-
-        // Initialize the application when the DOM is ready
-        init();
-    </script>
 </body>
 </html>
