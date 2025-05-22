@@ -272,9 +272,15 @@
         container.appendChild(div);
     }
 
-    window.addEventListener('popstate', (event) => {
-        handleRouteChange(event.state);
-    });
+    window.addEventListener("popstate", (event) => {
+  if (event.state?.movieTitle) {
+    showMovieDetails(event.state.movieTitle);
+  } else if (event.state?.filterCategory) {
+    filterMovies(event.state.filterCategory);
+  } else {
+    filterMovies('All');
+  }
+});
 
     function handleRouteChange(state) {
         let relativePath = window.location.pathname;
