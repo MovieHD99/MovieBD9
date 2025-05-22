@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Daily Movie Updates</title>
+    <title>moviehd99 Movie 2025 Hollywood, Bollywood, Bangla</title>
+    <meta name="title" content="moviehd99 - Latest Hollywood, Bollywood & Bangla Movies">
+<meta name="description" content="Watch and download the latest Hollywood, Bollywood, and Bangla movies daily. Get updates on new releases and full movie details.">
     <style>
         body {
             font-family: 'Inter', Arial, sans-serif;
@@ -336,30 +338,42 @@
         });
 
         function handleRouteChange() {
-            const currentPath = window.location.pathname;
-            let slug = currentPath.startsWith(gitHubPagesBasePath) ? currentPath.substring(gitHubPagesBasePath.length) : currentPath;
-            if (slug.startsWith('/')) slug = slug.substring(1);
+    const currentPath = window.location.pathname;
+    let slug = currentPath.startsWith(gitHubPagesBasePath) ? currentPath.substring(gitHubPagesBasePath.length) : currentPath;
+    if (slug.startsWith('/')) slug = slug.substring(1);
 
-            // Handle redirect from 404.html
-            const urlParams = new URLSearchParams(window.location.search);
-            const redirectedPath = urlParams.get('p');
-            if (redirectedPath) {
-                slug = redirectedPath.startsWith(gitHubPagesBasePath) ? redirectedPath.substring(gitHubPagesBasePath.length) : redirectedPath;
-                if (slug.startsWith('/')) slug = slug.substring(1);
-                if (!isCanvasPreview) {
-                    history.replaceState(null, '', gitHubPagesBasePath + (slug ? `/${slug}` : '/'));
-                }
-            }
-
-            if (slug) {
-                const movie = movies.find(m => generateSlug(m.title) === slug);
-                if (movie) {
-                    showMovieDetails(movie.title);
-                    return;
-                }
-            }
-            filterMovies('All');
+    // Handle redirect from 404.html
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectedPath = urlParams.get('p');
+    if (redirectedPath) {
+        slug = redirectedPath.startsWith(gitHubPagesBasePath) ? redirectedPath.substring(gitHubPagesBasePath.length) : redirectedPath;
+        if (slug.startsWith('/')) slug = slug.substring(1);
+        if (!isCanvasPreview) {
+            history.replaceState(null, '', gitHubPagesBasePath + (slug ? `/${slug}` : '/'));
         }
+    }
+
+    if (slug) {
+        // Try to find movie by slug
+        const movie = movies.find(m => generateSlug(m.title) === slug);
+        if (movie) {
+            showMovieDetails(movie.title);
+        } else {
+            // If slug doesn't match movie, treat as filter category if applicable
+            const category = slug.charAt(0).toUpperCase() + slug.slice(1);
+            if (['All', 'Hollywood', 'Bollywood', 'Bangla'].includes(category)) {
+                filterMovies(category);
+            } else {
+                // Unknown path - show movie list by default or an error message
+                filterMovies('All');
+            }
+        }
+    } else {
+        // Default to showing all movies
+        filterMovies('All');
+    }
+}
+
 
         function init() {
             updateNavLinks();
