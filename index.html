@@ -112,7 +112,6 @@
 <body>
   <header>
     <h1>🎬 Daily Movie Updates</h1>
-    
   </header>
 
   <nav>
@@ -154,7 +153,7 @@
       nextBatch.forEach((movie, index) => {
         const div = document.createElement("div");
         div.className = "movie";
-        div.innerHTML = 
+        div.innerHTML = `
           <img src="${movie.img}" alt="${movie.title}" />
           <h2>${movie.title}</h2>
           <button class="view-details-btn">View Details</button>
@@ -163,7 +162,7 @@
             <p>${movie.desc}</p>
             <a href="${movie.download}" class="download-btn" download>⬇️ Download</a>
           </div>
-        ;
+        `;
 
         // Add toggle functionality for "View Details"
         const btn = div.querySelector(".view-details-btn");
