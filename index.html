@@ -47,7 +47,23 @@
       border-radius: 8px;
     }
     .movie h2 {
-      margin: 0 0 0.5rem 0;
+      margin: 0.5rem 0;
+    }
+    .movie img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 5px;
+    }
+    .download-btn {
+      margin-top: 1rem;
+      display: inline-block;
+      background: #e50914;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      text-decoration: none;
     }
     .pagination {
       text-align: center;
@@ -70,7 +86,7 @@
   </header>
 
   <nav>
-    <a onclick="filterMovies('all')">Home</a>
+    <a onclick="filterMovies('All')">All</a>
     <a onclick="filterMovies('Hollywood')">Hollywood</a>
     <a onclick="filterMovies('Bollywood')">Bollywood</a>
     <a onclick="filterMovies('Bangla')">Bangla</a>
@@ -84,69 +100,60 @@
 
   <script>
     const movies = [
-      { title: "The Batman", year: "2022", desc: "Batman ventures into Gotham...", category: "Hollywood" },
-      { title: "Oppenheimer", year: "2023", desc: "The story of Oppenheimer...", category: "Hollywood" },
-      { title: "Inception", year: "2010", desc: "Dream-sharing technology...", category: "Hollywood" },
-      { title: "Dune", year: "2021", desc: "Battle for Arrakis...", category: "Hollywood" },
-      { title: "Avengers: Endgame", year: "2019", desc: "Reverse Thanos' actions...", category: "Hollywood" },
-      { title: "Spider-Man: No Way Home", year: "2021", desc: "Peter seeks help...", category: "Hollywood" },
-      { title: "The Dark Knight", year: "2008", desc: "Batman vs Joker...", category: "Hollywood" },
-      { title: "RRR", year: "2022", desc: "Two revolutionaries...", category: "Bollywood" },
-      { title: "KGF Chapter 2", year: "2022", desc: "Rocky's rise...", category: "Bollywood" },
-      { title: "Pushpa", year: "2021", desc: "Sandalwood smuggler...", category: "Bollywood" },
-      { title: "Jawan", year: "2023", desc: "Fighting corruption...", category: "Bollywood" },
-      { title: "Mirzapur", year: "2018", desc: "Crime and power struggle...", category: "Bangla" }
+      { title: "The Batman", year: "2022", desc: "Batman ventures into Gotham’s underworld.", category: "Hollywood", img: "https://i.imgur.com/Zi6v09X.jpg", download: "#" },
+      { title: "Oppenheimer", year: "2023", desc: "The story of J. Robert Oppenheimer.", category: "Hollywood", img: "https://i.imgur.com/FkJYkAI.jpg", download: "#" },
+      { title: "RRR", year: "2022", desc: "Two revolutionaries fight for their country.", category: "Bollywood", img: "https://i.imgur.com/4M7DG9c.jpg", download: "#" },
+      { title: "KGF Chapter 2", year: "2022", desc: "Rocky fights oppression at KGF.", category: "Bollywood", img: "https://i.imgur.com/q9RAmnh.jpg", download: "#" },
+      { title: "Mirzapur", year: "2018", desc: "A crime thriller in India.", category: "Bangla", img: "https://i.imgur.com/EkKtZzB.jpg", download: "#" },
+      { title: "Pushpa", year: "2021", desc: "A laborer rises in a smuggling syndicate.", category: "Bollywood", img: "https://i.imgur.com/XlRfrOl.jpg", download: "#" },
+      { title: "Inception", year: "2010", desc: "A thief who steals secrets via dreams.", category: "Hollywood", img: "https://i.imgur.com/Kh9O5AQ.jpg", download: "#" },
+      { title: "Dune", year: "2021", desc: "Paul Atreides fights for planet Arrakis.", category: "Hollywood", img: "https://i.imgur.com/V5POslk.jpg", download: "#" },
+      { title: "The Dark Knight", year: "2008", desc: "Batman fights Gotham's criminal underworld.", category: "Hollywood", img: "https://i.imgur.com/D2CdrBa.jpg", download: "#" },
+      { title: "Jawan", year: "2023", desc: "A man exposes corruption in society.", category: "Bollywood", img: "https://i.imgur.com/CqV8FZP.jpg", download: "#" },
+      { title: "Spider-Man: No Way Home", year: "2021", desc: "Peter Parker seeks help from Doctor Strange.", category: "Hollywood", img: "https://i.imgur.com/4bmrrA4.jpg", download: "#" }
     ];
 
-    let filteredMovies = [...movies];
     let currentIndex = 0;
-    const limit = 10;
-
+    const limit = 5;
+    let filteredMovies = [...movies];
     const container = document.getElementById("movie-container");
     const nextBtn = document.getElementById("next-btn");
 
     function displayMovies() {
-      container.innerHTML = "";
-
       const nextBatch = filteredMovies.slice(currentIndex, currentIndex + limit);
       nextBatch.forEach(movie => {
         const div = document.createElement("div");
         div.className = "movie";
         div.innerHTML = `
-          <h2>Movie Title: ${movie.title}</h2>
+          <img src="${movie.img}" alt="${movie.title}" />
+          <h2>${movie.title}</h2>
           <p>Release Date: ${movie.year}</p>
-          <p>Description: ${movie.desc}</p>
+          <p>${movie.desc}</p>
+          <a href="${movie.download}" class="download-btn" download>⬇️ Download</a>
         `;
         container.appendChild(div);
       });
 
-      // Show/hide next button
-      if (currentIndex + limit >= filteredMovies.length) {
+      currentIndex += limit;
+      if (currentIndex >= filteredMovies.length) {
         nextBtn.style.display = "none";
-      } else {
-        nextBtn.style.display = "inline-block";
       }
     }
 
     function filterMovies(category) {
+      container.innerHTML = '';
       currentIndex = 0;
 
-      if (category === "all") {
-        filteredMovies = [...movies];
-      } else {
-        filteredMovies = movies.filter(movie => movie.category === category);
-      }
+      filteredMovies = category === "All"
+        ? [...movies]
+        : movies.filter(movie => movie.category === category);
 
       displayMovies();
+      nextBtn.style.display = currentIndex >= filteredMovies.length ? "none" : "inline-block";
     }
 
-    nextBtn.addEventListener("click", () => {
-      currentIndex += limit;
-      displayMovies();
-    });
-
-    // Initial load
-    filterMovies('all');
+    nextBtn.addEventListener("click", displayMovies);
+    filterMovies("All"); // Initial load
   </script>
 </body>
 </html>
