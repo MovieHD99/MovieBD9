@@ -32,6 +32,7 @@
       color: #fff;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
     }
     nav a:hover {
       color: #e50914;
@@ -69,10 +70,10 @@
   </header>
 
   <nav>
-    <a href="#">Home</a>
-    <a href="#">Hollywood</a>
-    <a href="#">Bollywood</a>
-    <a href="#">Bangla</a>
+    <a onclick="filterMovies('all')">Home</a>
+    <a onclick="filterMovies('Hollywood')">Hollywood</a>
+    <a onclick="filterMovies('Bollywood')">Bollywood</a>
+    <a onclick="filterMovies('Bangla')">Bangla</a>
   </nav>
 
   <div class="container" id="movie-container"></div>
@@ -83,27 +84,31 @@
 
   <script>
     const movies = [
-      { title: "The Batman", year: "2022", desc: "Batman ventures into Gotham’s underworld when a sadistic killer leaves behind a trail of cryptic clues." },
-      { title: "Oppenheimer", year: "2023", desc: "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb." },
-      { title: "Inception", year: "2010", desc: "A thief who steals corporate secrets through use of dream-sharing technology." },
-      { title: "Dune", year: "2021", desc: "Paul Atreides leads nomadic tribes in a battle to control the desert planet Arrakis." },
-      { title: "RRR", year: "2022", desc: "A tale of two legendary revolutionaries and their journey away from home before they started fighting for their country." },
-      { title: "KGF Chapter 2", year: "2022", desc: "Rocky becomes the uplifter of people struggling at the KGF by fighting against oppression." },
-      { title: "Avengers: Endgame", year: "2019", desc: "The Avengers assemble once more to reverse Thanos' actions and restore balance." },
-      { title: "Pushpa", year: "2021", desc: "A laborer rises through ranks of a red sandalwood smuggling syndicate." },
-      { title: "Spider-Man: No Way Home", year: "2021", desc: "Peter Parker seeks help from Doctor Strange to forget he's Spider-Man." },
-      { title: "The Dark Knight", year: "2008", desc: "Batman sets out to dismantle the remaining criminal organizations that plague the streets." },
-      { title: "Jawan", year: "2023", desc: "A man is driven by a personal vendetta to expose the corruption in society." },
-      { title: "Mirzapur", year: "2018", desc: "A crime thriller set in the heartland of India with violence and power struggles." }
+      { title: "The Batman", year: "2022", desc: "Batman ventures into Gotham...", category: "Hollywood" },
+      { title: "Oppenheimer", year: "2023", desc: "The story of Oppenheimer...", category: "Hollywood" },
+      { title: "Inception", year: "2010", desc: "Dream-sharing technology...", category: "Hollywood" },
+      { title: "Dune", year: "2021", desc: "Battle for Arrakis...", category: "Hollywood" },
+      { title: "Avengers: Endgame", year: "2019", desc: "Reverse Thanos' actions...", category: "Hollywood" },
+      { title: "Spider-Man: No Way Home", year: "2021", desc: "Peter seeks help...", category: "Hollywood" },
+      { title: "The Dark Knight", year: "2008", desc: "Batman vs Joker...", category: "Hollywood" },
+      { title: "RRR", year: "2022", desc: "Two revolutionaries...", category: "Bollywood" },
+      { title: "KGF Chapter 2", year: "2022", desc: "Rocky's rise...", category: "Bollywood" },
+      { title: "Pushpa", year: "2021", desc: "Sandalwood smuggler...", category: "Bollywood" },
+      { title: "Jawan", year: "2023", desc: "Fighting corruption...", category: "Bollywood" },
+      { title: "Mirzapur", year: "2018", desc: "Crime and power struggle...", category: "Bangla" }
     ];
 
+    let filteredMovies = [...movies];
     let currentIndex = 0;
     const limit = 10;
+
     const container = document.getElementById("movie-container");
     const nextBtn = document.getElementById("next-btn");
 
     function displayMovies() {
-      const nextBatch = movies.slice(currentIndex, currentIndex + limit);
+      container.innerHTML = "";
+
+      const nextBatch = filteredMovies.slice(currentIndex, currentIndex + limit);
       nextBatch.forEach(movie => {
         const div = document.createElement("div");
         div.className = "movie";
@@ -115,14 +120,33 @@
         container.appendChild(div);
       });
 
-      currentIndex += limit;
-      if (currentIndex >= movies.length) {
+      // Show/hide next button
+      if (currentIndex + limit >= filteredMovies.length) {
         nextBtn.style.display = "none";
+      } else {
+        nextBtn.style.display = "inline-block";
       }
     }
 
-    nextBtn.addEventListener("click", displayMovies);
-    displayMovies(); // initial load
+    function filterMovies(category) {
+      currentIndex = 0;
+
+      if (category === "all") {
+        filteredMovies = [...movies];
+      } else {
+        filteredMovies = movies.filter(movie => movie.category === category);
+      }
+
+      displayMovies();
+    }
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex += limit;
+      displayMovies();
+    });
+
+    // Initial load
+    filterMovies('all');
   </script>
 </body>
 </html>
