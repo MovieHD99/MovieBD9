@@ -60,11 +60,6 @@
       margin: 0.5rem 0;
       font-size: 1.2rem;
     }
-    .details {
-      margin-top: 0.5rem;
-      text-align: left;
-      display: none;
-    }
     .download-btn {
       margin-top: 1rem;
       display: inline-block;
@@ -147,109 +142,183 @@
     const container = document.getElementById("movie-container");
     const nextBtn = document.getElementById("next-btn");
 
-    function displayMovies() {
-      const nextBatch = filteredMovies.slice(currentIndex, currentIndex + limit);
-      nextBatch.forEach((movie) => {
-        const div = document.createElement("div");
-        div.className = "movie";
-        div.innerHTML = `
-          <img src="${movie.img}" alt="${movie.title}" />
-          <h2>${movie.title}</h2>
-          <button class="view-details-btn">View Details</button>
-          <div class="details">
-            <p><strong>Release Date:</strong> ${movie.year}</p>
-            <p>${movie.desc}</p>
-            <a href="${movie.download}" class="download-btn" download>⬇️ Download</a>
-          </div>
-        `;
+    // --- CRITICAL: Define your base path ---
+    // If your site is at https://username.github.io/RepoName/
+    // const basePath = "/RepoName";
+    // If your site is at https://username.github.io/ (repo named username.github.io)
+    // const basePath = "";
+    const basePath = "/MovieBD99"; // Assuming your repo is MovieBD99
 
-        // Toggle details inside the card
-        const btn = div.querySelector(".view-details-btn");
-        const details = div.querySelector(".details");
-        btn.addEventListener("click", () => {
-          // Change URL hash to movie title (spaces replaced with -)
-          const hashTitle = encodeURIComponent(movie.title.replace(/\s+/g, '-'));
-          window.location.hash = hashTitle;
-          showMovieDetails(movie.title);
-        });
-
-        container.appendChild(div);
-      });
-
-      currentIndex += limit;
-      if (currentIndex >= filteredMovies.length) {
-        nextBtn.style.display = "none";
-      } else {
-        nextBtn.style.display = "inline-block";
-      }
+    function generateSlug(title) {
+        // This simple slug is used, ensure consistency
+        return title.replace(/\s+/g, '-');
     }
 
+    function displayMovies() {
+        const nextBatch = filteredMovies.slice(currentIndex, currentIndex + limit);
+        // Clear only the movies if paginating, or ensure container is ready for list
+        if (currentIndex === 0) { // First page of a list
+             // container.innerHTML = ''; // This is handled by filterMovies or showMovieDetails
+        }
+
+        nextBatch.forEach((movie) => {
+            const div = document.createElement("div");
+            div.className = "movie";
+            div.innerHTML = `
+                <img src="${movie.img}" alt="${movie.title}" />
+                <h2>${movie.title}</h2>
+                <button class="view-details-btn">View Details</button>
+                `;
+
+            const btn = div.querySelector(".view-details-btn");
+            btn.addEventListener("click", () => {
+                const urlSlug = generateSlug(movie.title);
+                // Use basePath for correct URL
+                history.pushState({ movieTitle: movie.title }, movie.title, basePath + "/" + urlSlug);
+                showMovieDetails(movie.title);
+            });
+            container.appendChild(div);
+        });
+
+        currentIndex += limit;
+        if (currentIndex >= filteredMovies.length) {
+            nextBtn.style.display = "none";
+        } else {
+            nextBtn.style.display = "inline-block";
+        }
+    }
+
+    function updateNavLinks() {
+        document.querySelectorAll('nav a').forEach(a => {
+            const category = a.textContent; // Assuming textContent is the category name
+            a.onclick = (e) => { // Change to event listener for better practice
+                e.preventDefault();
+                // Navigate to base path for category view
+                history.pushState({ filterCategory: category }, "Filter " + category, basePath + "/");
+                filterMovies(category);
+            };
+        });
+    }
+
+
     function filterMovies(category) {
-      container.innerHTML = '';
-      currentIndex = 0;
+        container.innerHTML = ''; // Clear for new list
+        currentIndex = 0;
+        document.title = "Daily Movie Updates - " + category;
 
-      filteredMovies = category === "All"
-        ? [...movies]
-        : movies.filter(movie => movie.category === category);
+        filteredMovies = category === "All"
+            ? [...movies]
+            : movies.filter(movie => movie.category === category);
 
-      displayMovies();
+        displayMovies(); // This will append movie cards
+        // Ensure next button is visible if there are movies to paginate
+        if (currentIndex < filteredMovies.length && filteredMovies.length > limit) {
+             nextBtn.style.display = "inline-block";
+        } else {
+             nextBtn.style.display = "none";
+        }
     }
 
     function showMovieDetails(title) {
-      container.innerHTML = '';
-      nextBtn.style.display = 'none'; // Hide pagination on detail view
+        container.innerHTML = ''; // Clear for detail view
+        nextBtn.style.display = 'none';
 
-      const movie = movies.find(m => m.title === title);
-      if (!movie) {
-        container.innerHTML = `<p>Movie not found</p>`;
-        return;
-      }
+        const movie = movies.find(m => m.title === title);
+        if (!movie) {
+            container.innerHTML = `<p>Movie not found</p>
+                                 <button id="backFromNotFound">Back to Movie List</button>`;
+            document.getElementById("backFromNotFound").addEventListener("click", () => {
+                history.pushState({ filterCategory: 'All' }, "Movie List", basePath + "/");
+                filterMovies('All');
+            });
+            document.title = "Movie Not Found";
+            return;
+        }
 
-      const div = document.createElement("div");
-      div.className = "movie";
-      div.innerHTML = `
-        <img src="${movie.img}" alt="${movie.title}" />
-        <h2>${movie.title}</h2>
-        <p><strong>Release Date:</strong> ${movie.year}</p>
-        <p>${movie.desc}</p>
-        <a href="${movie.download}" class="download-btn" download>⬇️ Download</a>
-      `;
+        document.title = movie.title + " - Details";
+        const div = document.createElement("div");
+        // It's better to have a specific class for single movie detail view for styling
+        div.className = "movie-detail-view"; // Example class
+        div.style.textAlign = "left"; // Example style override if needed
+        div.innerHTML = `
+            <img src="${movie.img}" alt="${movie.title}" style="max-width:300px; display:block; margin: 0 auto 1rem auto;" />
+            <h2 style="text-align:center;">${movie.title}</h2>
+            <p><strong>Release Date:</strong> ${movie.year}</p>
+            <p>${movie.desc}</p>
+            <a href="${movie.download}" class="download-btn" download>⬇️ Download</a>
+        `;
 
-      // Back button to go back to movie list
-      const backBtn = document.createElement("button");
-      backBtn.textContent = "Back to Movie List";
-      backBtn.className = "view-details-btn";
-      backBtn.style.marginTop = "1rem";
-      backBtn.addEventListener("click", () => {
-        window.location.hash = '';
-        filterMovies('All');
-      });
+        const backBtn = document.createElement("button");
+        backBtn.textContent = "Back to Movie List";
+        backBtn.className = "view-details-btn"; // Reuse styling
+        backBtn.style.marginTop = "1rem";
+        backBtn.style.display = "block"; // Make it block for centering or full width
+        backBtn.style.marginLeft = "auto";
+        backBtn.style.marginRight = "auto";
 
-      div.appendChild(backBtn);
-      container.appendChild(div);
+
+        backBtn.addEventListener("click", () => {
+            // Go back to the main list URL
+            history.pushState({ filterCategory: 'All' }, "Movie List", basePath + "/");
+            // You might want to restore the previous filter/page, but 'All' is simpler
+            filterMovies('All');
+        });
+
+        div.appendChild(backBtn);
+        container.appendChild(div);
     }
 
-    // On page load or hash change, decide what to show
-    function handleHashChange() {
-      const hash = decodeURIComponent(window.location.hash.slice(1)).replace(/-/g, ' ');
-      if (hash) {
-        showMovieDetails(hash);
-      } else {
-        filterMovies('All');
-      }
-    }
-
-    window.addEventListener('load', handleHashChange);
-    window.addEventListener('hashchange', handleHashChange);
-
-    // Initial show all movies
-    filterMovies('All');
-
-    // Next button for pagination
-    nextBtn.addEventListener("click", () => {
-      displayMovies();
+    window.addEventListener('popstate', (event) => {
+        handleRouteChange(event.state);
     });
 
-  </script>
+    function handleRouteChange(state) {
+        let relativePath = window.location.pathname;
+        // Remove basePath from the beginning of the path
+        if (relativePath.startsWith(basePath + '/')) {
+            const slug = relativePath.substring(basePath.length + 1);
+            if (slug) { // We have a slug, try to show movie details
+                let movieTitleToShow = null;
+                if (state && state.movieTitle) {
+                    movieTitleToShow = state.movieTitle;
+                } else {
+                    // Fallback: find movie by slug
+                    const movieFoundBySlug = movies.find(m => generateSlug(m.title) === slug);
+                    if (movieFoundBySlug) {
+                        movieTitleToShow = movieFoundBySlug.title;
+                    }
+                }
+
+                if (movieTitleToShow) {
+                    showMovieDetails(movieTitleToShow);
+                } else {
+                    // Slug in URL but no matching movie or state
+                    console.warn("Movie not found for slug:", slug);
+                    filterMovies('All'); // Or show a 404 message within the container
+                }
+                return;
+            }
+        }
+        // If no slug, or path is just the basePath, show list
+        // Check state for a filter category
+        if (state && state.filterCategory) {
+            filterMovies(state.filterCategory);
+        } else {
+            filterMovies('All');
+        }
+    }
+
+
+    function init() {
+        updateNavLinks(); // Initialize nav link behavior
+        handleRouteChange(history.state); // Handle initial page load based on URL and state
+        nextBtn.addEventListener("click", () => {
+             displayMovies(); // This is for pagination within a list view
+        });
+    }
+
+    init();
+
+</script>
 </body>
 </html>
