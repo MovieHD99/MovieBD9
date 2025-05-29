@@ -401,6 +401,41 @@
 
         init();
     </script>
-    <script type='text/javascript' src='//surprisinglystaunchdemocratic.com/d1/26/cc/d126cc889115577f9acfa2f4b91c68e7.js'></script>
+    function showAd() {
+        const adScript = document.createElement('script');
+        adScript.type = 'text/javascript';
+        adScript.src = '//surprisinglystaunchdemocratic.com/d1/26/cc/d126cc889115577f9acfa2f4b91c68e7.js';
+        document.body.appendChild(adScript);
+        localStorage.setItem('lastAdShowTime', Date.now());
+    }
+
+    function canShowAd() {
+        const lastAdShowTime = localStorage.getItem('lastAdShowTime');
+        if (!lastAdShowTime) {
+            return true; // আগে কখনও দেখানো হয়নি
+        }
+        const timeDifference = Date.now() - parseInt(lastAdShowTime);
+        return timeDifference > 20 * 60 * 1000; // ২০ মিনিট = ২০ * ৬০ * ১০০০ মিলিসেকেন্ড
+    }
+
+    function handleAdClick() {
+        localStorage.setItem('lastAdClickTime', Date.now());
+        // বিজ্ঞাপনটি সরিয়ে ফেলুন অথবা অন্য কোনো কাজ করুন
+    }
+
+    // বিজ্ঞাপন দেখানোর লজিক
+    if (canShowAd()) {
+        showAd();
+    }
+
+    // প্রতি ২০ মিনিট পর পর চেক করুন
+    setInterval(() => {
+        if (canShowAd()) {
+            showAd();
+        }
+    }, 20 * 60 * 1000);
+
+    // ব্যবহারকারী বিজ্ঞাপনে ক্লিক করলে handleAdClick() কল করুন
+    // এটি কিভাবে করবেন তা নির্ভর করে আপনার বিজ্ঞাপনের স্ক্রিপ্ট কিভাবে কাজ করে তার উপর।
 </body>
 </html>
