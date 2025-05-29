@@ -7,231 +7,43 @@
     <meta name="title" content="moviehd99 - Latest Hollywood, Bollywood & Bangla Movies">
     <meta name="description" content="Watch and download the latest Hollywood, Bollywood, and Bangla movies daily. Get updates on new releases and full movie details.">
     <style>
-        body {
-            font-family: 'Inter', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #121212;
-            color: #f5f5f5;
-        }
-        header {
-            background-color: #e50914;
-            padding: 1rem;
-            text-align: center;
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-        }
-        h1 {
-            margin: 0;
-            font-size: 2rem;
-            color: #fff;
-        }
-        nav {
-            background: #1f1f1f;
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            padding: 1rem 0;
-            border-radius: 8px;
-            margin: 1rem;
-            flex-wrap: wrap; /* Added for responsiveness */
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        nav a:hover {
-            background-color: #e50914;
-            color: #fff;
-        }
-        .container {
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            justify-content: center;
-        }
-        .movie {
-            background: #1f1f1f;
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out;
-            display: flex; /* Added for flex layout */
-            flex-direction: column; /* Added for vertical layout */
-            justify-content: space-between; /* Added to push button down */
-        }
-        .movie:hover {
-            transform: translateY(-5px);
-        }
-        .movie img {
-            width: 100%;
-            max-width: 250px;
-            height: 375px; /* Fixed height for consistency */
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            object-fit: cover; /* Ensures image covers area */
-        }
-        .movie h2 {
-            margin: 0.5rem 0;
-            font-size: 1.3rem;
-            color: #e50914;
-            min-height: 3.9rem; /* Ensures h2 takes similar space */
-            flex-grow: 1; /* Allows h2 to grow */
-        }
-        .movie .button-wrapper { /* Wrapper for buttons */
-             margin-top: auto; /* Pushes buttons to bottom */
-        }
-        .download-btn {
-            margin-top: 1rem;
-            display: inline-block;
-            background: #e50914;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-        .download-btn:hover {
-            background: #ff222d;
-            transform: translateY(-2px);
-        }
-        .view-details-btn {
-            margin-top: 0.8rem;
-            background: transparent;
-            border: 2px solid #e50914;
-            color: #e50914;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: background 0.3s ease, color 0.3s ease;
-            display: block; /* Make it block */
-            width: calc(100% - 2.4rem); /* Adjust width */
-            margin-left: auto; /* Center */
-            margin-right: auto; /* Center */
-        }
-        .view-details-btn:hover {
-            background: #e50914;
-            color: white;
-        }
-        .pagination {
-            text-align: center;
-            margin: 2rem 0;
-            grid-column: 1 / -1;
-        }
-        .pagination button {
-            background: #e50914;
-            color: white;
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-        .pagination button:hover {
-            background: #ff222d;
-            transform: translateY(-2px);
-        }
-        .movie-detail-view {
-            background: #1f1f1f;
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem auto;
-            max-width: 800px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            text-align: left;
-        }
-        .movie-detail-view img {
-            display: block;
-            margin: 0 auto 1.5rem auto;
-            max-width: 350px;
-            border-radius: 10px;
-        }
-        .movie-detail-view h2 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #e50914; /* Added color */
-        }
-        .movie-detail-view p {
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-        .movie-detail-view .download-btn {
-            display: block;
-            text-align: center;
-            margin: 1.5rem auto 1rem auto;
-            max-width: 200px;
-        }
-        .movie-detail-view .view-details-btn { /* Re-using style for Back button */
-            display: block;
-            margin: 1rem auto 0 auto;
-            max-width: 200px;
-            text-align: center;
-        }
-        .video-container { 
-            position: relative; 
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0; 
-            overflow: hidden; 
-            max-width: 100%; 
-            background: #000; 
-            margin-bottom: 1.5rem; 
-            border-radius: 8px; /* Added radius */
-        }
-        .video-container iframe { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-        }
-        #ad-script-container { 
-            margin: 1.5rem auto; 
-            text-align: center; 
-            min-height: 50px; /* Give it some space */
-        }
+        /* আপনার CSS কোড এখানে থাকবে (আগের মতোই) */
+        body { font-family: 'Inter', Arial, sans-serif; margin: 0; padding: 0; background: #121212; color: #f5f5f5; }
+        header { background-color: #e50914; padding: 1rem; text-align: center; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
+        h1 { margin: 0; font-size: 2rem; color: #fff; }
+        nav { background: #1f1f1f; display: flex; justify-content: center; gap: 1.5rem; padding: 1rem 0; border-radius: 8px; margin: 1rem; flex-wrap: wrap; }
+        nav a { color: #fff; text-decoration: none; font-weight: bold; cursor: pointer; padding: 0.5rem 1rem; border-radius: 4px; transition: background-color 0.3s ease, color 0.3s ease; }
+        nav a:hover { background-color: #e50914; color: #fff; }
+        .container { padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; justify-content: center; }
+        .movie { background: #1f1f1f; border-radius: 12px; padding: 1.5rem; text-align: center; position: relative; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease-in-out; display: flex; flex-direction: column; justify-content: space-between; }
+        .movie:hover { transform: translateY(-5px); }
+        .movie img { width: 100%; max-width: 250px; height: 375px; border-radius: 8px; margin-bottom: 1rem; object-fit: cover; }
+        .movie h2 { margin: 0.5rem 0; font-size: 1.3rem; color: #e50914; min-height: 3.9rem; flex-grow: 1; }
+        .movie .button-wrapper { margin-top: auto; }
+        .download-btn { margin-top: 1rem; display: inline-block; background: #e50914; color: white; padding: 0.8rem 1.5rem; border: none; border-radius: 6px; font-size: 1rem; text-decoration: none; font-weight: bold; transition: background 0.3s ease, transform 0.2s ease; }
+        .download-btn:hover { background: #ff222d; transform: translateY(-2px); }
+        .view-details-btn { margin-top: 0.8rem; background: transparent; border: 2px solid #e50914; color: #e50914; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.95rem; transition: background 0.3s ease, color 0.3s ease; display: block; width: calc(100% - 2.4rem); margin-left: auto; margin-right: auto; }
+        .view-details-btn:hover { background: #e50914; color: white; }
+        .pagination { text-align: center; margin: 2rem 0; grid-column: 1 / -1; }
+        .pagination button { background: #e50914; color: white; padding: 0.8rem 2rem; border: none; border-radius: 6px; font-size: 1.1rem; cursor: pointer; font-weight: bold; transition: background 0.3s ease, transform 0.2s ease; }
+        .pagination button:hover { background: #ff222d; transform: translateY(-2px); }
+        .movie-detail-view { background: #1f1f1f; border-radius: 12px; padding: 2rem; margin: 2rem auto; max-width: 800px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); text-align: left; }
+        .movie-detail-view img { display: block; margin: 0 auto 1.5rem auto; max-width: 350px; border-radius: 10px; }
+        .movie-detail-view h2 { text-align: center; font-size: 2rem; margin-bottom: 1rem; color: #e50914; }
+        .movie-detail-view p { line-height: 1.6; margin-bottom: 1rem; }
+        .movie-detail-view .download-btn { display: block; text-align: center; margin: 1.5rem auto 1rem auto; max-width: 200px; }
+        .movie-detail-view .view-details-btn { display: block; margin: 1rem auto 0 auto; max-width: 200px; text-align: center; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; margin-bottom: 1.5rem; border-radius: 8px; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        #ad-script-container { margin: 1.5rem auto; text-align: center; min-height: 50px; /* Add styling as needed */ cursor: pointer; /* Add cursor to indicate clickability */ }
         @media (max-width: 768px) {
-            .container {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                padding: 1rem;
-            }
-            .movie {
-                padding: 1rem;
-            }
-            .movie img { 
-                height: 300px; /* Adjust height for smaller screens */
-            }
-            .movie h2 {
-                font-size: 1.1rem;
-                min-height: 3.3rem; /* Adjust min-height */
-            }
-            nav {
-                gap: 0.5rem; /* Reduced gap */
-                margin: 0.5rem;
-                padding: 0.8rem; /* Adjusted padding */
-            }
-            .movie-detail-view {
-                padding: 1.5rem;
-                margin: 1rem;
-            }
-            .movie-detail-view img {
-                max-width: 80%;
-            }
+            .container { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); padding: 1rem; }
+            .movie { padding: 1rem; }
+            .movie img { height: 300px; }
+            .movie h2 { font-size: 1.1rem; min-height: 3.3rem; }
+            nav { gap: 0.5rem; margin: 0.5rem; padding: 0.8rem; }
+            .movie-detail-view { padding: 1.5rem; margin: 1rem; }
+            .movie-detail-view img { max-width: 80%; }
         }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -243,14 +55,23 @@
         <h1>🎬 Daily Movie Updates</h1>
     </header>
     <script type="text/javascript">
-	atOptions = {
-		'key' : 'ece0d8dbb1cda440fadc14e551091650',
-		'format' : 'iframe',
-		'height' : 50,
-		'width' : 320,
-		'params' : {}
-	};
+
+atOptions = {
+
+'key' : 'ece0d8dbb1cda440fadc14e551091650',
+
+'format' : 'iframe',
+
+'height' : 50,
+
+'width' : 320,
+
+'params' : {}
+
+};
+
 </script>
+
 <script type="text/javascript" src="//surprisinglystaunchdemocratic.com/ece0d8dbb1cda440fadc14e551091650/invoke.js"></script>
     <nav>
         <a id="nav-all">All</a>
@@ -265,7 +86,8 @@
 
     <div id="ad-script-container"></div> 
 
-    <script src="movies.js"></script> <script>
+    <script src="movies.js"></script>
+    <script>
         // Wait for the DOM to be fully loaded before running the script
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -274,22 +96,24 @@
             let filteredMovies = []; // Initialize as empty
             const container = document.getElementById("movie-container");
             const nextBtn = document.getElementById("next-btn");
-            // *** আপনার GitHub Pages repository নাম দিয়ে "/MovieBD99" অংশটি পরিবর্তন করুন ***
-            // *** যদি রুট ডোমেইনে থাকে, তাহলে "" ব্যবহার করুন ***
+            // *** আপনার GitHub Pages repository নাম দিয়ে "/MovieBD99" অংশটি পরিবর্তন করুন ***
             const gitHubPagesBasePath = "/MovieBD99"; 
             const isCanvasPreview = window.location.protocol === 'blob:';
-            const AD_INTERVAL = 20 * 60 * 1000; // 20 minutes in milliseconds
+            
+            // --- Ad Logic Variables ---
+            const AD_INTERVAL = 30 * 60 * 1000; // 30 minutes
             const adScriptContainer = document.getElementById('ad-script-container');
+            let adCheckTimeout = null; // To manage ad timeouts
 
             // Function to generate URL-friendly slugs
             function generateSlug(title) {
                 return title.toLowerCase()
-                    .replace(/[^\w\s-]/g, '') // Remove non-word chars except space/hyphen
-                    .replace(/[\s_-]+/g, '-') // Replace spaces/underscores with single hyphen
+                    .replace(/[^\w\s-]/g, '') // Remove non-word chars
+                    .replace(/[\s_-]+/g, '-') // Replace spaces/underscores
                     .replace(/^-+|-+$/g, ''); // Trim hyphens
             }
 
-            // Function to display movies in batches
+            // Function to display movies
             function displayMovies() {
                 const nextBatch = filteredMovies.slice(currentIndex, currentIndex + limit);
                 nextBatch.forEach((movie) => {
@@ -305,9 +129,8 @@
                     container.appendChild(div);
                 });
 
-                // Add event listeners AFTER appending elements
+                // Add event listeners AFTER appending
                 container.querySelectorAll('.view-details-btn').forEach(btn => {
-                    // Use addEventListener for better practice
                     btn.addEventListener('click', (event) => { 
                        const title = decodeURIComponent(event.target.getAttribute('data-title'));
                        const movie = movies.find(m => m.title === title);
@@ -326,7 +149,7 @@
                 nextBtn.style.display = currentIndex >= filteredMovies.length ? "none" : "inline-block";
             }
             
-            // Function to set up navigation links
+            // Function to set up navigation
             function updateNavLinks() {
                 const navLinks = [
                     { id: 'nav-all', category: 'All' },
@@ -337,7 +160,7 @@
                 navLinks.forEach(link => {
                     document.getElementById(link.id).addEventListener('click', (e) => {
                         e.preventDefault();
-                        const newPath = gitHubPagesBasePath + "/"; // Go to base path for category view
+                        const newPath = gitHubPagesBasePath + "/";
                         if (!isCanvasPreview) {
                             history.pushState({ filterCategory: link.category }, `${link.category} Movies`, newPath);
                         }
@@ -346,7 +169,7 @@
                 });
             }
 
-            // Function to filter movies based on category
+            // Function to filter movies
             function filterMovies(category) {
                 container.innerHTML = '';
                 currentIndex = 0;
@@ -359,17 +182,15 @@
                 }
                 filteredMovies = category === "All" ? [...movies] : movies.filter(movie => movie.category === category);
                 displayMovies();
-                // Ensure next button shows correctly even if > limit but not much
                 nextBtn.style.display = currentIndex < filteredMovies.length ? "inline-block" : "none";
             }
 
-            // Function to display details of a single movie
+            // Function to show movie details
             function showMovieDetails(title) {
                 container.innerHTML = '';
                 nextBtn.style.display = 'none';
                 
                 if (typeof movies === 'undefined' || !movies) {
-                     console.error("movies.js data not loaded!");
                      showMovieNotFoundError();
                      return;
                 }
@@ -407,19 +228,19 @@
 
                 const backBtn = document.createElement("button");
                 backBtn.textContent = "Back to Movie List";
-                backBtn.className = "view-details-btn"; // Re-use style
+                backBtn.className = "view-details-btn";
                 backBtn.addEventListener("click", () => {
                     const newPath = gitHubPagesBasePath + "/";
                     if (!isCanvasPreview) {
                         history.pushState({ filterCategory: 'All' }, "Movie List", newPath);
                     }
-                    filterMovies('All'); // Go back to 'All' or remember last category
+                    filterMovies('All');
                 });
                 div.appendChild(backBtn);
                 container.appendChild(div);
             }
 
-            // Function to show an error when a movie isn't found
+            // Function for 'Movie Not Found'
             function showMovieNotFoundError() {
                  container.innerHTML = `
                     <div class="movie-detail-view" style="text-align: center; grid-column: 1 / -1;">
@@ -430,25 +251,23 @@
                 document.title = "Movie Not Found";
                 document.getElementById("backFromNotFound").addEventListener("click", () => {
                     const newPath = gitHubPagesBasePath + "/";
-                    if (!isCanvasPreview) {
-                        history.pushState({ filterCategory: 'All' }, "Movie List", newPath);
-                    }
+                    history.pushState({ filterCategory: 'All' }, "Movie List", newPath);
                     filterMovies('All');
                 });
             }
 
-            // Handle browser back/forward buttons
+            // Handle browser navigation
             window.addEventListener("popstate", (event) => {
                 if (event.state?.movieTitle) {
                     showMovieDetails(event.state.movieTitle);
                 } else if (event.state?.filterCategory) {
                     filterMovies(event.state.filterCategory);
                 } else {
-                    handleRouteChange(); // Handle direct navigation/reloads
+                    handleRouteChange();
                 }
             });
 
-            // Handle page loading and routing (including 404 redirects)
+            // Handle routing
             function handleRouteChange() {
                 const urlParams = new URLSearchParams(window.location.search);
                 const redirectedPath = urlParams.get('p');
@@ -456,9 +275,8 @@
 
                 if (redirectedPath) {
                     currentPath = decodeURIComponent(redirectedPath);
-                    const stateToPush = history.state || {}; // Keep existing state or create empty
                     if (!isCanvasPreview) {
-                         history.replaceState(stateToPush, '', currentPath);
+                         history.replaceState(history.state || {}, '', currentPath);
                     }
                 } else {
                     currentPath = window.location.pathname;
@@ -467,7 +285,7 @@
                 let slug = currentPath.startsWith(gitHubPagesBasePath) ? currentPath.substring(gitHubPagesBasePath.length) : currentPath;
                 if (slug.startsWith('/')) slug = slug.substring(1);
 
-                console.log("Routing based on slug:", slug); // Debugging line
+                console.log("Routing based on slug:", slug); 
 
                 if (slug && slug !== '') {
                     const movie = movies.find(m => generateSlug(m.title) === slug);
@@ -478,7 +296,6 @@
                         if(categoryMatch) {
                            filterMovies(categoryMatch);
                         } else {
-                           console.warn("Unknown slug:", slug, "- showing Not Found");
                            showMovieNotFoundError();
                         }
                     }
@@ -487,15 +304,73 @@
                 }
             }
             
-            
+            // --- Advertisement Logic (সংশোধিত) ---
+
+            function canShowAdNow() {
+                const lastClickTime = localStorage.getItem('lastAdClickTime');
+                if (!lastClickTime) return true; // আগে ক্লিক না হলে দেখাও
+                // ৩০ মিনিট পার হয়েছে কিনা চেক করুন
+                return (Date.now() - parseInt(lastClickTime)) >= AD_INTERVAL;
+            }
+
+            function handleAdClicked() {
+                console.log("Ad container clicked - Hiding for 30 mins!");
+                localStorage.setItem('lastAdClickTime', Date.now());
+                if (adScriptContainer) {
+                    adScriptContainer.innerHTML = ''; // বিজ্ঞাপন সরিয়ে দিন
+                    adScriptContainer.style.display = 'none'; // কন্টেইনার লুকিয়ে ফেলুন
+                }
+                clearTimeout(adCheckTimeout); // আগের টাইমআউট ক্লিয়ার করুন
+                // ৩০ মিনিট পর আবার চেষ্টা করার জন্য নতুন টাইমআউট সেট করুন
+                adCheckTimeout = setTimeout(attemptToShowAd, AD_INTERVAL);
+            }
+
+            function attemptToShowAd() {
+                clearTimeout(adCheckTimeout); // ডুপ্লিকেট টাইমআউট এড়াতে ক্লিয়ার করুন
+
+                if (canShowAdNow() && adScriptContainer) {
+                    console.log("Loading ad...");
+                    adScriptContainer.innerHTML = ''; // আগের কিছু থাকলে পরিষ্কার করুন
+                    adScriptContainer.style.display = 'block'; // কন্টেইনার দেখান
+
+                    const script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    // আমরা আগের d1... স্ক্রিপ্টটি ব্যবহার করছি
+                    script.src = '//surprisinglystaunchdemocratic.com/d1/26/cc/d126cc889115577f9acfa2f4b91c68e7.js';
+                    script.onerror = () => { 
+                        console.error("Ad script failed to load."); 
+                        adScriptContainer.innerHTML = '';
+                        adScriptContainer.style.display = 'none';
+                        // লোড না হলে ৩০ মিনিট পর আবার চেষ্টা করুন
+                        adCheckTimeout = setTimeout(attemptToShowAd, AD_INTERVAL);
+                    };
+                    script.onload = () => { 
+                        console.log("Ad script loaded. Click container to hide for 30 mins."); 
+                        // কন্টেইনারে ক্লিক লিসেনার যোগ করুন
+                        adScriptContainer.onclick = handleAdClicked;
+                        // যদি ক্লিক না হয়, ৩০ মিনিট পর আবার দেখানোর চেষ্টা করুন
+                        adCheckTimeout = setTimeout(attemptToShowAd, AD_INTERVAL);
+                    };
+                    adScriptContainer.appendChild(script);
+
+                } else {
+                    console.log("Ad suppressed (waiting 30 mins post-click).");
+                    const lastClick = localStorage.getItem('lastAdClickTime');
+                    let timeToWait = AD_INTERVAL;
+                    if(lastClick) {
+                         timeToWait = AD_INTERVAL - (Date.now() - parseInt(lastClick));
+                    }
+                    // আবার চেক করার জন্য টাইমআউট সেট করুন
+                    adCheckTimeout = setTimeout(attemptToShowAd, Math.max(10000, timeToWait)); // কমপক্ষে ১০ সেকেন্ড অপেক্ষা করুন
+                }
+            }
+
             // Initialization function
             function init() {
                 updateNavLinks();
                 handleRouteChange(); // Handle initial load / reload
                 nextBtn.addEventListener("click", displayMovies);
-                attemptToShowAd(); // Try showing ad on load
-                // Set a periodic check as a fallback (e.g., every 5 mins)
-                setInterval(attemptToShowAd, 5 * 60 * 1000); 
+                attemptToShowAd(); // প্রথমবার বিজ্ঞাপন দেখানোর চেষ্টা করুন
             }
 
             // Ensure movies.js is loaded before initializing
@@ -514,46 +389,6 @@
             }
 
         }); // End of DOMContentLoaded
-
-	    // --- Ad Logic ---
-            function canShowAdNow() {
-                const lastClickTime = localStorage.getItem('lastAdClickTime');
-                if (!lastClickTime) return true; // Never clicked, show
-                return (Date.now() - parseInt(lastClickTime)) >= AD_INTERVAL;
-            }
-
-            function attemptToShowAd() {
-                if (canShowAdNow()) {
-                    console.log("Loading ad...");
-                    adScriptContainer.innerHTML = ''; // Clear previous
-
-                    const script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.src = '//surprisinglystaunchdemocratic.com/d1/26/cc/d126cc889115577f9acfa2f4b91c68e7.js';
-                    script.onerror = () => { 
-                        console.error("Ad script failed to load."); 
-                        adScriptContainer.innerHTML = ''; // Clear on error too
-                    };
-                    script.onload = () => { 
-                        console.log("Ad script loaded."); 
-                        // *** এখানে ক্লিক ডিটেক্ট করা কঠিন ***
-                        // আমরা পুরো কন্টেইনারে ক্লিক লিসেনার যোগ করতে পারি,
-                        // কিন্তু এটি ১০০% নির্ভরযোগ্য নয়।
-                        adScriptContainer.onclick = () => {
-                             console.log("Ad container clicked - Assuming ad interaction!");
-                             localStorage.setItem('lastAdClickTime', Date.now());
-                             adScriptContainer.innerHTML = ''; // ক্লিক করলে বিজ্ঞাপন লুকিয়ে ফেলুন
-                             // ২০ মিনিট পর আবার দেখানোর চেষ্টা করার জন্য অপেক্ষা করুন
-                             setTimeout(attemptToShowAd, AD_INTERVAL); 
-                        };
-                    };
-                    adScriptContainer.appendChild(script);
-                } else {
-                    console.log("Ad suppressed (waiting 20 mins post-click).");
-                    // Check again later
-                    setTimeout(attemptToShowAd, AD_INTERVAL - (Date.now() - parseInt(localStorage.getItem('lastAdClickTime'))));
-                }
-            }
     </script>
 </body>
 </html>
