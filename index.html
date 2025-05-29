@@ -514,43 +514,46 @@
             }
 
         }); // End of DOMContentLoaded
+
+	    // --- Ad Logic ---
+            function canShowAdNow() {
+                const lastClickTime = localStorage.getItem('lastAdClickTime');
+                if (!lastClickTime) return true; // Never clicked, show
+                return (Date.now() - parseInt(lastClickTime)) >= AD_INTERVAL;
+            }
+
+            function attemptToShowAd() {
+                if (canShowAdNow()) {
+                    console.log("Loading ad...");
+                    adScriptContainer.innerHTML = ''; // Clear previous
+
+                    const script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.src = '//surprisinglystaunchdemocratic.com/d1/26/cc/d126cc889115577f9acfa2f4b91c68e7.js';
+                    script.onerror = () => { 
+                        console.error("Ad script failed to load."); 
+                        adScriptContainer.innerHTML = ''; // Clear on error too
+                    };
+                    script.onload = () => { 
+                        console.log("Ad script loaded."); 
+                        // *** এখানে ক্লিক ডিটেক্ট করা কঠিন ***
+                        // আমরা পুরো কন্টেইনারে ক্লিক লিসেনার যোগ করতে পারি,
+                        // কিন্তু এটি ১০০% নির্ভরযোগ্য নয়।
+                        adScriptContainer.onclick = () => {
+                             console.log("Ad container clicked - Assuming ad interaction!");
+                             localStorage.setItem('lastAdClickTime', Date.now());
+                             adScriptContainer.innerHTML = ''; // ক্লিক করলে বিজ্ঞাপন লুকিয়ে ফেলুন
+                             // ২০ মিনিট পর আবার দেখানোর চেষ্টা করার জন্য অপেক্ষা করুন
+                             setTimeout(attemptToShowAd, AD_INTERVAL); 
+                        };
+                    };
+                    adScriptContainer.appendChild(script);
+                } else {
+                    console.log("Ad suppressed (waiting 20 mins post-click).");
+                    // Check again later
+                    setTimeout(attemptToShowAd, AD_INTERVAL - (Date.now() - parseInt(localStorage.getItem('lastAdClickTime'))));
+                }
+            }
     </script>
-	function showAd() {
-        const adScript = document.createElement('script');
-        adScript.type = 'text/javascript';
-        adScript.src = '//surprisinglystaunchdemocratic.com/d1/26/cc/d126cc889115577f9acfa2f4b91c68e7.js';
-        document.body.appendChild(adScript);
-        localStorage.setItem('lastAdShowTime', Date.now());
-    }
-
-    function canShowAd() {
-        const lastAdShowTime = localStorage.getItem('lastAdShowTime');
-        if (!lastAdShowTime) {
-            return true; // আগে কখনও দেখানো হয়নি
-        }
-        const timeDifference = Date.now() - parseInt(lastAdShowTime);
-        return timeDifference > 20 * 60 * 1000; // ২০ মিনিট = ২০ * ৬০ * ১০০০ মিলিসেকেন্ড
-    }
-
-    function handleAdClick() {
-        localStorage.setItem('lastAdClickTime', Date.now());
-        // বিজ্ঞাপনটি সরিয়ে ফেলুন অথবা অন্য কোনো কাজ করুন
-    }
-
-    // বিজ্ঞাপন দেখানোর লজিক
-    if (canShowAd()) {
-        showAd();
-    }
-
-    // প্রতি ২০ মিনিট পর পর চেক করুন
-    setInterval(() => {
-        if (canShowAd()) {
-            showAd();
-        }
-    }, 20 * 60 * 1000);
-
-    // ব্যবহারকারী বিজ্ঞাপনে ক্লিক করলে handleAdClick() কল করুন
-    // এটি কিভাবে করবেন তা নির্ভর করে আপনার বিজ্ঞাপনের স্ক্রিপ্ট কিভাবে কাজ করে তার উপর।
-    
 </body>
 </html>
