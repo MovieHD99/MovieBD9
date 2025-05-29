@@ -1,5 +1,14 @@
 const movies = [
   {
+        title: "HIT: The 3rd Case (2025)",
+        year: "2025",
+        category: "Bollywood",
+        img: "https://m.media-amazon.com/images/M/MV5BNTI0Yzc1Y2EtNDg4MS00OWJmLWI4ODItMjFjMDQ4NjNjM2NhXkEyXkFqcGc@._V1_.jpg",
+        desc: "This is a great Bollywood movie released in 2024.",
+        download: "https://m.movielinkbd.work/go2link/TZjmDC2uX7JZjLGcESbKIyffCaAHj9QeC0K2rX9kgmz1jeZ7OhUYN91-XdpsL8RXRIJb0hE_igLPu5F6NjOlqn2Ghf_5iCI5cnVzaX_Nw60",
+        videoUrl: "https://vembed.online/e/tt23804696" // Add this line for each movie
+    },
+  {
     title: "The Bhootnii (2025) Hindi Movie",
     year: "2025",
     desc: "The Bhootnii (2025) Hindi Movie",
