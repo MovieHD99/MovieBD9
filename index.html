@@ -54,25 +54,7 @@
     <header>
         <h1>🎬 Daily Movie Updates</h1>
     </header>
-    <script type="text/javascript">
-
-atOptions = {
-
-'key' : 'ece0d8dbb1cda440fadc14e551091650',
-
-'format' : 'iframe',
-
-'height' : 50,
-
-'width' : 320,
-
-'params' : {}
-
-};
-
-</script>
-
-<script type="text/javascript" src="//surprisinglystaunchdemocratic.com/ece0d8dbb1cda440fadc14e551091650/invoke.js"></script>
+    
     <nav>
         <a id="nav-all">All</a>
         <a id="nav-hollywood">Hollywood</a>
@@ -215,7 +197,7 @@ atOptions = {
                 if (movie.videoUrl) {
                     movieDetailHtml += `
                         <div class="video-container">
-                            <iframe src="${movie.videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe src="${movie.videoUrl}"sandbox="allow-same-origin allow-scripts"; frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen;></iframe>
                         </div>
                     `;
                 }
@@ -304,7 +286,67 @@ atOptions = {
                 }
             }
             
-            
+            // --- Advertisement Logic (সংশোধিত) ---
+
+            function canShowAdNow() {
+                const lastClickTime = localStorage.getItem('lastAdClickTime');
+                if (!lastClickTime) return true; // আগে ক্লিক না হলে দেখাও
+                // ৩০ মিনিট পার হয়েছে কিনা চেক করুন
+                return (Date.now() - parseInt(lastClickTime)) >= AD_INTERVAL;
+            }
+
+            function handleAdClicked() {
+                console.log("Ad container clicked - Hiding for 30 mins!");
+                localStorage.setItem('lastAdClickTime', Date.now());
+                if (adScriptContainer) {
+                    adScriptContainer.innerHTML = ''; // বিজ্ঞাপন সরিয়ে দিন
+                    adScriptContainer.style.display = 'none'; // কন্টেইনার লুকিয়ে ফেলুন
+                }
+                clearTimeout(adCheckTimeout); // আগের টাইমআউট ক্লিয়ার করুন
+                // ৩০ মিনিট পর আবার চেষ্টা করার জন্য নতুন টাইমআউট সেট করুন
+                adCheckTimeout = setTimeout(attemptToShowAd, AD_INTERVAL);
+            }
+
+            function attemptToShowAd() {
+                clearTimeout(adCheckTimeout); // ডুপ্লিকেট টাইমআউট এড়াতে ক্লিয়ার করুন
+
+                if (canShowAdNow() && adScriptContainer) {
+                    console.log("Loading ad...");
+                    adScriptContainer.innerHTML = ''; // আগের কিছু থাকলে পরিষ্কার করুন
+                    adScriptContainer.style.display = 'block'; // কন্টেইনার দেখান
+
+                    const script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    // আমরা আগের d1... স্ক্রিপ্টটি ব্যবহার করছি
+                    script.src = '//surprisinglystaunchdemocratic.com/d1/26/cc/d126cc889115577f9acfa2f4b91c68e7.js';
+                    script.onerror = () => { 
+                        console.error("Ad script failed to load."); 
+                        adScriptContainer.innerHTML = '';
+                        adScriptContainer.style.display = 'none';
+                        // লোড না হলে ৩০ মিনিট পর আবার চেষ্টা করুন
+                        adCheckTimeout = setTimeout(attemptToShowAd, AD_INTERVAL);
+                    };
+                    script.onload = () => { 
+                        console.log("Ad script loaded. Click container to hide for 30 mins."); 
+                        // কন্টেইনারে ক্লিক লিসেনার যোগ করুন
+                        adScriptContainer.onclick = handleAdClicked;
+                        // যদি ক্লিক না হয়, ৩০ মিনিট পর আবার দেখানোর চেষ্টা করুন
+                        adCheckTimeout = setTimeout(attemptToShowAd, AD_INTERVAL);
+                    };
+                    adScriptContainer.appendChild(script);
+
+                } else {
+                    console.log("Ad suppressed (waiting 30 mins post-click).");
+                    const lastClick = localStorage.getItem('lastAdClickTime');
+                    let timeToWait = AD_INTERVAL;
+                    if(lastClick) {
+                         timeToWait = AD_INTERVAL - (Date.now() - parseInt(lastClick));
+                    }
+                    // আবার চেক করার জন্য টাইমআউট সেট করুন
+                    adCheckTimeout = setTimeout(attemptToShowAd, Math.max(10000, timeToWait)); // কমপক্ষে ১০ সেকেন্ড অপেক্ষা করুন
+                }
+            }
+
             // Initialization function
             function init() {
                 updateNavLinks();
