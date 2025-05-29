@@ -7,42 +7,231 @@
     <meta name="title" content="moviehd99 - Latest Hollywood, Bollywood & Bangla Movies">
     <meta name="description" content="Watch and download the latest Hollywood, Bollywood, and Bangla movies daily. Get updates on new releases and full movie details.">
     <style>
-        /* আপনার CSS কোড এখানে থাকবে (কোনো পরিবর্তন করা হয়নি) */
-        body { font-family: 'Inter', Arial, sans-serif; margin: 0; padding: 0; background: #121212; color: #f5f5f5; }
-        header { background-color: #e50914; padding: 1rem; text-align: center; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
-        h1 { margin: 0; font-size: 2rem; color: #fff; }
-        nav { background: #1f1f1f; display: flex; justify-content: center; gap: 1.5rem; padding: 1rem 0; border-radius: 8px; margin: 1rem; flex-wrap: wrap; } /* Added flex-wrap */
-        nav a { color: #fff; text-decoration: none; font-weight: bold; cursor: pointer; padding: 0.5rem 1rem; border-radius: 4px; transition: background-color 0.3s ease, color 0.3s ease; }
-        nav a:hover { background-color: #e50914; color: #fff; }
-        .container { padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; justify-content: center; }
-        .movie { background: #1f1f1f; border-radius: 12px; padding: 1.5rem; text-align: center; position: relative; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease-in-out; }
-        .movie:hover { transform: translateY(-5px); }
-        .movie img { width: 100%; max-width: 250px; height: 375px; /* Fixed height */ border-radius: 8px; margin-bottom: 1rem; object-fit: cover; } /* Added fixed height */
-        .movie h2 { margin: 0.5rem 0; font-size: 1.3rem; color: #e50914; min-height: 3.9rem; /* Ensure consistent height */}
-        .download-btn { margin-top: 1rem; display: inline-block; background: #e50914; color: white; padding: 0.8rem 1.5rem; border: none; border-radius: 6px; font-size: 1rem; text-decoration: none; font-weight: bold; transition: background 0.3s ease, transform 0.2s ease; }
-        .download-btn:hover { background: #ff222d; transform: translateY(-2px); }
-        .view-details-btn { margin-top: 0.8rem; background: transparent; border: 2px solid #e50914; color: #e50914; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.95rem; transition: background 0.3s ease, color 0.3s ease; }
-        .view-details-btn:hover { background: #e50914; color: white; }
-        .pagination { text-align: center; margin: 2rem 0; grid-column: 1 / -1; }
-        .pagination button { background: #e50914; color: white; padding: 0.8rem 2rem; border: none; border-radius: 6px; font-size: 1.1rem; cursor: pointer; font-weight: bold; transition: background 0.3s ease, transform 0.2s ease; }
-        .pagination button:hover { background: #ff222d; transform: translateY(-2px); }
-        .movie-detail-view { background: #1f1f1f; border-radius: 12px; padding: 2rem; margin: 2rem auto; max-width: 800px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); text-align: left; }
-        .movie-detail-view img { display: block; margin: 0 auto 1.5rem auto; max-width: 350px; border-radius: 10px; }
-        .movie-detail-view h2 { text-align: center; font-size: 2rem; margin-bottom: 1rem; color: #e50914; } /* Added color */
-        .movie-detail-view p { line-height: 1.6; margin-bottom: 1rem; }
-        .movie-detail-view .download-btn { display: block; text-align: center; margin: 1.5rem auto 1rem auto; max-width: 200px; }
-        .movie-detail-view .view-details-btn { display: block; margin: 1rem auto 0 auto; max-width: 200px; text-align: center; }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; margin-bottom: 1.5rem; border-radius: 8px; } /* Added radius */
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        #ad-script-container { margin: 1.5rem auto; text-align: center; /* Add styling as needed */ }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #f5f5f5;
+        }
+        header {
+            background-color: #e50914;
+            padding: 1rem;
+            text-align: center;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+            color: #fff;
+        }
+        nav {
+            background: #1f1f1f;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem 0;
+            border-radius: 8px;
+            margin: 1rem;
+            flex-wrap: wrap; /* Added for responsiveness */
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #e50914;
+            color: #fff;
+        }
+        .container {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        .movie {
+            background: #1f1f1f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+            display: flex; /* Added for flex layout */
+            flex-direction: column; /* Added for vertical layout */
+            justify-content: space-between; /* Added to push button down */
+        }
+        .movie:hover {
+            transform: translateY(-5px);
+        }
+        .movie img {
+            width: 100%;
+            max-width: 250px;
+            height: 375px; /* Fixed height for consistency */
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            object-fit: cover; /* Ensures image covers area */
+        }
+        .movie h2 {
+            margin: 0.5rem 0;
+            font-size: 1.3rem;
+            color: #e50914;
+            min-height: 3.9rem; /* Ensures h2 takes similar space */
+            flex-grow: 1; /* Allows h2 to grow */
+        }
+        .movie .button-wrapper { /* Wrapper for buttons */
+             margin-top: auto; /* Pushes buttons to bottom */
+        }
+        .download-btn {
+            margin-top: 1rem;
+            display: inline-block;
+            background: #e50914;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .download-btn:hover {
+            background: #ff222d;
+            transform: translateY(-2px);
+        }
+        .view-details-btn {
+            margin-top: 0.8rem;
+            background: transparent;
+            border: 2px solid #e50914;
+            color: #e50914;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background 0.3s ease, color 0.3s ease;
+            display: block; /* Make it block */
+            width: calc(100% - 2.4rem); /* Adjust width */
+            margin-left: auto; /* Center */
+            margin-right: auto; /* Center */
+        }
+        .view-details-btn:hover {
+            background: #e50914;
+            color: white;
+        }
+        .pagination {
+            text-align: center;
+            margin: 2rem 0;
+            grid-column: 1 / -1;
+        }
+        .pagination button {
+            background: #e50914;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .pagination button:hover {
+            background: #ff222d;
+            transform: translateY(-2px);
+        }
+        .movie-detail-view {
+            background: #1f1f1f;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-align: left;
+        }
+        .movie-detail-view img {
+            display: block;
+            margin: 0 auto 1.5rem auto;
+            max-width: 350px;
+            border-radius: 10px;
+        }
+        .movie-detail-view h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #e50914; /* Added color */
+        }
+        .movie-detail-view p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .movie-detail-view .download-btn {
+            display: block;
+            text-align: center;
+            margin: 1.5rem auto 1rem auto;
+            max-width: 200px;
+        }
+        .movie-detail-view .view-details-btn { /* Re-using style for Back button */
+            display: block;
+            margin: 1rem auto 0 auto;
+            max-width: 200px;
+            text-align: center;
+        }
+        .video-container { 
+            position: relative; 
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0; 
+            overflow: hidden; 
+            max-width: 100%; 
+            background: #000; 
+            margin-bottom: 1.5rem; 
+            border-radius: 8px; /* Added radius */
+        }
+        .video-container iframe { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+        }
+        #ad-script-container { 
+            margin: 1.5rem auto; 
+            text-align: center; 
+            min-height: 50px; /* Give it some space */
+        }
         @media (max-width: 768px) {
-            .container { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); padding: 1rem; }
-            .movie { padding: 1rem; }
-            .movie img { height: 300px; }
-            .movie h2 { font-size: 1.1rem; min-height: 3.3rem; }
-            nav { gap: 0.5rem; margin: 0.5rem; padding: 0.8rem; } /* Adjusted gap/padding */
-            .movie-detail-view { padding: 1.5rem; margin: 1rem; }
-            .movie-detail-view img { max-width: 80%; }
+            .container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                padding: 1rem;
+            }
+            .movie {
+                padding: 1rem;
+            }
+            .movie img { 
+                height: 300px; /* Adjust height for smaller screens */
+            }
+            .movie h2 {
+                font-size: 1.1rem;
+                min-height: 3.3rem; /* Adjust min-height */
+            }
+            nav {
+                gap: 0.5rem; /* Reduced gap */
+                margin: 0.5rem;
+                padding: 0.8rem; /* Adjusted padding */
+            }
+            .movie-detail-view {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            .movie-detail-view img {
+                max-width: 80%;
+            }
         }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,19 +256,22 @@
     <div id="ad-script-container"></div> 
 
     <script src="movies.js"></script> <script>
-        document.addEventListener('DOMContentLoaded', () => { // Wait for DOM to load
+        // Wait for the DOM to be fully loaded before running the script
+        document.addEventListener('DOMContentLoaded', () => {
 
             let currentIndex = 0;
             const limit = 6;
-            let filteredMovies = []; // Initialize as empty, will be set by filterMovies
+            let filteredMovies = []; // Initialize as empty
             const container = document.getElementById("movie-container");
             const nextBtn = document.getElementById("next-btn");
             // *** আপনার GitHub Pages repository নাম দিয়ে "/MovieBD99" অংশটি পরিবর্তন করুন ***
+            // *** যদি রুট ডোমেইনে থাকে, তাহলে "" ব্যবহার করুন ***
             const gitHubPagesBasePath = "/MovieBD99"; 
             const isCanvasPreview = window.location.protocol === 'blob:';
-            const AD_INTERVAL = 20 * 60 * 1000; // 20 minutes
-            let adScriptContainer = document.getElementById('ad-script-container');
+            const AD_INTERVAL = 20 * 60 * 1000; // 20 minutes in milliseconds
+            const adScriptContainer = document.getElementById('ad-script-container');
 
+            // Function to generate URL-friendly slugs
             function generateSlug(title) {
                 return title.toLowerCase()
                     .replace(/[^\w\s-]/g, '') // Remove non-word chars except space/hyphen
@@ -87,6 +279,7 @@
                     .replace(/^-+|-+$/g, ''); // Trim hyphens
             }
 
+            // Function to display movies in batches
             function displayMovies() {
                 const nextBatch = filteredMovies.slice(currentIndex, currentIndex + limit);
                 nextBatch.forEach((movie) => {
@@ -95,14 +288,17 @@
                     div.innerHTML = `
                         <img src="${movie.img}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://placehold.co/250x375/333333/FFFFFF?text=Image+Not+Found';" />
                         <h2>${movie.title}</h2>
-                        <button class="view-details-btn" data-title="${encodeURIComponent(movie.title)}">View Details</button>
-                    `; // Used data-title for safer access
+                        <div class="button-wrapper">
+                           <button class="view-details-btn" data-title="${encodeURIComponent(movie.title)}">View Details</button>
+                        </div>
+                    `;
                     container.appendChild(div);
                 });
 
-                // Add event listeners AFTER appending
+                // Add event listeners AFTER appending elements
                 container.querySelectorAll('.view-details-btn').forEach(btn => {
-                    btn.onclick = (event) => { // Use onclick or addEventListener
+                    // Use addEventListener for better practice
+                    btn.addEventListener('click', (event) => { 
                        const title = decodeURIComponent(event.target.getAttribute('data-title'));
                        const movie = movies.find(m => m.title === title);
                        if(movie) {
@@ -113,13 +309,14 @@
                             }
                             showMovieDetails(movie.title);
                        }
-                    };
+                    });
                 });
 
                 currentIndex += limit;
                 nextBtn.style.display = currentIndex >= filteredMovies.length ? "none" : "inline-block";
             }
             
+            // Function to set up navigation links
             function updateNavLinks() {
                 const navLinks = [
                     { id: 'nav-all', category: 'All' },
@@ -130,7 +327,7 @@
                 navLinks.forEach(link => {
                     document.getElementById(link.id).addEventListener('click', (e) => {
                         e.preventDefault();
-                        const newPath = gitHubPagesBasePath + "/";
+                        const newPath = gitHubPagesBasePath + "/"; // Go to base path for category view
                         if (!isCanvasPreview) {
                             history.pushState({ filterCategory: link.category }, `${link.category} Movies`, newPath);
                         }
@@ -139,11 +336,11 @@
                 });
             }
 
+            // Function to filter movies based on category
             function filterMovies(category) {
                 container.innerHTML = '';
                 currentIndex = 0;
                 document.title = `Daily Movie Updates - ${category}`;
-                // *** Ensure 'movies' exists before filtering ***
                 if (typeof movies === 'undefined' || !movies) {
                     console.error("movies.js data not loaded!");
                     container.innerHTML = "<p>Error: Movie data could not be loaded.</p>";
@@ -152,14 +349,15 @@
                 }
                 filteredMovies = category === "All" ? [...movies] : movies.filter(movie => movie.category === category);
                 displayMovies();
+                // Ensure next button shows correctly even if > limit but not much
                 nextBtn.style.display = currentIndex < filteredMovies.length ? "inline-block" : "none";
             }
 
+            // Function to display details of a single movie
             function showMovieDetails(title) {
                 container.innerHTML = '';
                 nextBtn.style.display = 'none';
                 
-                // *** Ensure 'movies' exists before finding ***
                 if (typeof movies === 'undefined' || !movies) {
                      console.error("movies.js data not loaded!");
                      showMovieNotFoundError();
@@ -199,21 +397,22 @@
 
                 const backBtn = document.createElement("button");
                 backBtn.textContent = "Back to Movie List";
-                backBtn.className = "view-details-btn";
+                backBtn.className = "view-details-btn"; // Re-use style
                 backBtn.addEventListener("click", () => {
                     const newPath = gitHubPagesBasePath + "/";
                     if (!isCanvasPreview) {
                         history.pushState({ filterCategory: 'All' }, "Movie List", newPath);
                     }
-                    filterMovies('All');
+                    filterMovies('All'); // Go back to 'All' or remember last category
                 });
                 div.appendChild(backBtn);
                 container.appendChild(div);
             }
 
+            // Function to show an error when a movie isn't found
             function showMovieNotFoundError() {
                  container.innerHTML = `
-                    <div class="movie-detail-view" style="text-align: center;">
+                    <div class="movie-detail-view" style="text-align: center; grid-column: 1 / -1;">
                         <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">Movie not found or invalid URL.</p>
                         <button id="backFromNotFound" class="view-details-btn">Back to Movie List</button>
                     </div>
@@ -228,6 +427,7 @@
                 });
             }
 
+            // Handle browser back/forward buttons
             window.addEventListener("popstate", (event) => {
                 if (event.state?.movieTitle) {
                     showMovieDetails(event.state.movieTitle);
@@ -238,17 +438,17 @@
                 }
             });
 
+            // Handle page loading and routing (including 404 redirects)
             function handleRouteChange() {
                 const urlParams = new URLSearchParams(window.location.search);
                 const redirectedPath = urlParams.get('p');
                 let currentPath;
 
                 if (redirectedPath) {
-                    // Came from 404.html redirect
                     currentPath = decodeURIComponent(redirectedPath);
-                    // Update URL without the ?p= part
+                    const stateToPush = history.state || {}; // Keep existing state or create empty
                     if (!isCanvasPreview) {
-                         history.replaceState(history.state, '', currentPath);
+                         history.replaceState(stateToPush, '', currentPath);
                     }
                 } else {
                     currentPath = window.location.pathname;
@@ -264,13 +464,12 @@
                     if (movie) {
                         showMovieDetails(movie.title);
                     } else {
-                        // Check if it's a known category (case-insensitive)
                         const categoryMatch = ['All', 'Hollywood', 'Bollywood', 'Bangla'].find(c => c.toLowerCase() === slug.toLowerCase());
                         if(categoryMatch) {
                            filterMovies(categoryMatch);
                         } else {
-                           console.warn("Unknown slug:", slug, "- showing 'All'");
-                           showMovieNotFoundError(); // Or filterMovies('All');
+                           console.warn("Unknown slug:", slug, "- showing Not Found");
+                           showMovieNotFoundError();
                         }
                     }
                 } else {
@@ -278,7 +477,7 @@
                 }
             }
             
-            // --- Ad Logic ---
+            // --- Advertisement Logic ---
             function canShowAdNow() {
                 const lastClickTime = localStorage.getItem('lastAdClickTime');
                 if (!lastClickTime) return true; // Never clicked, show
@@ -286,63 +485,67 @@
             }
 
             function attemptToShowAd() {
-                if (canShowAdNow()) {
-                    console.log("Loading ad...");
-                    adScriptContainer.innerHTML = ''; // Clear previous
+                if (canShowAdNow() && adScriptContainer) {
+                    console.log("Attempting to load ad...");
+                    adScriptContainer.innerHTML = ''; // Clear previous ad/content
 
                     const script = document.createElement('script');
                     script.type = 'text/javascript';
                     script.src = '//surprisinglystaunchdemocratic.com/d1/26/cc/d126cc889115577f9acfa2f4b91c68e7.js';
                     script.onerror = () => { 
                         console.error("Ad script failed to load."); 
-                        adScriptContainer.innerHTML = ''; // Clear on error too
+                        adScriptContainer.innerHTML = ''; // Clear on error
                     };
                     script.onload = () => { 
                         console.log("Ad script loaded."); 
-                        // *** এখানে ক্লিক ডিটেক্ট করা কঠিন ***
-                        // আমরা পুরো কন্টেইনারে ক্লিক লিসেনার যোগ করতে পারি,
-                        // কিন্তু এটি ১০০% নির্ভরযোগ্য নয়।
+                        // Add click listener to the container (best guess for interaction)
                         adScriptContainer.onclick = () => {
                              console.log("Ad container clicked - Assuming ad interaction!");
                              localStorage.setItem('lastAdClickTime', Date.now());
-                             adScriptContainer.innerHTML = ''; // ক্লিক করলে বিজ্ঞাপন লুকিয়ে ফেলুন
-                             // ২০ মিনিট পর আবার দেখানোর চেষ্টা করার জন্য অপেক্ষা করুন
+                             adScriptContainer.innerHTML = ''; // Hide ad on click
+                             // Set a timeout to try showing again after the interval
                              setTimeout(attemptToShowAd, AD_INTERVAL); 
                         };
                     };
                     adScriptContainer.appendChild(script);
                 } else {
-                    console.log("Ad suppressed (waiting 20 mins post-click).");
-                    // Check again later
-                    setTimeout(attemptToShowAd, AD_INTERVAL - (Date.now() - parseInt(localStorage.getItem('lastAdClickTime'))));
+                    console.log("Ad suppressed or container not found.");
+                    // If suppressed, check again when interval is over
+                    const lastClick = localStorage.getItem('lastAdClickTime');
+                    if (lastClick) {
+                         const timeToWait = AD_INTERVAL - (Date.now() - parseInt(lastClick));
+                         setTimeout(attemptToShowAd, Math.max(10000, timeToWait)); // Wait at least 10s
+                    }
                 }
             }
             
+            // Initialization function
             function init() {
                 updateNavLinks();
                 handleRouteChange(); // Handle initial load / reload
                 nextBtn.addEventListener("click", displayMovies);
-                attemptToShowAd(); // Show ad on initial load (if possible)
-                // Periodically check if we can show ad (e.g., every 5 mins)
-                // This interval is a fallback in case the setTimeout chain breaks.
+                attemptToShowAd(); // Try showing ad on load
+                // Set a periodic check as a fallback (e.g., every 5 mins)
                 setInterval(attemptToShowAd, 5 * 60 * 1000); 
             }
 
-            // Ensure movies is loaded, then init. A small delay can help sometimes.
-            if (typeof movies !== 'undefined') {
+            // Ensure movies.js is loaded before initializing
+            if (typeof movies !== 'undefined' && movies.length > 0) {
                 init();
             } else {
-                console.error("movies.js seems not loaded yet. Waiting...");
+                console.error("movies.js not loaded or empty. Retrying in 0.5s...");
                 setTimeout(() => {
-                    if (typeof movies !== 'undefined') {
+                    if (typeof movies !== 'undefined' && movies.length > 0) {
                         init();
                     } else {
-                       document.getElementById('movie-container').innerHTML = "<h1>Error: Could not load movie data. Please try again later.</h1>";
+                       container.innerHTML = "<h2 style='text-align: center; grid-column: 1 / -1;'>Error: Could not load movie data. Please check `movies.js` and reload.</h2>";
+                       nextBtn.style.display = 'none';
                     }
-                }, 500); // Wait 0.5 sec and try again.
+                }, 500); 
             }
 
         }); // End of DOMContentLoaded
     </script>
-    </body>
+    
+</body>
 </html>
