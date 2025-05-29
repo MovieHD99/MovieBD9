@@ -1,13 +1,13 @@
 const movies = [
   {
-        title: "Ondhokarer Gaan (2025)",
-        year: "2025",
-        category: "Bangla",
-        img: "https://image.tmdb.org/t/p/original/5zlHKvMt5iwhtSRXy1td7n4WAwW.jpg",
-        desc: "This is a great Bollywood movie released in 2024.",
-        download: "",
-        videoUrl: "https://vembed.online/e/tt35317601" // Add this line for each movie
-    },
+    title: "Ondhokarer Gaan (2025)",
+    year: "2025",
+    category: "Bangla",
+    img: "https://image.tmdb.org/t/p/original/5zlHKvMt5iwhtSRXy1td7n4WAwW.jpg",
+    desc: "This is a great Bangla movie released in 2024.",
+    download: "#",
+    videoUrl: "https://vembed.online/e/tt35317601" // Add this line for each movie
+  },
   {
         title: "HIT: The 3rd Case (2025)",
         year: "2025",
