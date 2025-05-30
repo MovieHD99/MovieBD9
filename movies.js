@@ -1,5 +1,50 @@
 const movies = [
   {
+  "title": "Mirza-Chapter: Club 29",
+  "year": "2025",
+  "category": "Bangla",
+  "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThQgrG8ZVbeeoWK5_LV9lHsM2oN4bQz7ON_Cf_S_EaQ__bgZwjs8QmhuaV&s=10",
+  "desc": "A WEB-DL comedy-crime-drama movie in Bangla.",
+  "download": "/go2link/uXcHVnZWbK_-6Tyahqxr6oQci3Xtryza-_2VPUVQxWoEZyCXMDye5jsDNAz8adNaFVhYlPu1DbpKp39Hkkr1G2w6RgZgvuDH0vb5ycFh7RU",
+  "videoUrl": "https://vembed.online/e/tt36955562"
+},
+  {
+  "title": "Captain America: Brave New World",
+  "year": "2025",
+  "category": "Hindi,English,Multi Audio",
+  "img": "https://preview.redd.it/official-poster-for-captain-america-brave-new-world-v0-jkgmtnwszxzd1.jpeg?auto=webp&s=90b1ec0b517d9fcc07bfd5b06c8da5218d574c35",
+  "desc": "A Full HD Hindi ORG action-adventure sci-fi movie available in Blu-Ray with Hindi, English, and Multi Audio options.",
+  "download": "/go2link/l-Nupq4OKahYsz24W7TiXx1GmnBQFcxfkKS9saL1x7u-ee75sO24LvzGyVwKky634cIt_q8PFjdOzqmE3XvgglZk7I927iO54u1sMXcko13QDiMnc5TCbXhOinka78uY",
+  "videoUrl": "https://vembed.online/e/tt14513804"
+},
+  {
+  "title": "Thudarum",
+  "year": "2025",
+  "category": "Hindi,Malayalam,Multi Audio",
+  "img": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/ipumuu0FF9yr3pIaqGBaAAYCu23.jpg",
+  "desc": "A Full HD Hindi ORG drama movie available in 4K uHDRip with Hindi, Malayalam, and Multi Audio options.",
+  "download": "/go2link/iYet4XKQkNe4MIdg0HjeHa014mRLWoC2Pu4ZQkThfss3oCzHXKdsl_l03_6ktbHL4A8-hZitljwAJHSQpeaxgQ",
+  "videoUrl": "https://vembed.online/e/tt31969600"
+},
+  {
+  "title": "Ong Bak 2: The Beginning",
+  "year": "2008",
+  "category": "Hindi, Dual Audio",
+  "img": "https://www.themoviedb.org/t/p/original/2yb5KUuojISi0iYrDX5VxExJILM.jpg",
+  "desc": "An action-packed adventure movie available in Hindi and Dual Audio in WEB-DL quality.",
+  "download": "/go2link/KdK0AN_bRmKq5VwGt7BwslBP4TniiU6I9vVRtRiDTBgIE6Qjil0gurA1AZwdKuSii-FYTqHFXHnHAZzj0mjWpWKNKKpVL1GQxOS8SN3JfX4",
+  "videoUrl": "#"
+},
+  {
+  "title": "Retro",
+  "year": "2025",
+  "category": "Hindi,Tamil,Multi Audio",
+  "img": "https://m.media-amazon.com/images/M/MV5BYzZjYzU0OGMtODI1OS00MjU5LThlOTAtZjY2NmZlOTVlMmE5XkEyXkFqcGc@._V1_.jpg",
+  "desc": "A Full HD Hindi ORG movie in Action, Drama, and Romance genres, available in 4K uHDRip with Hindi, Tamil, and Multi Audio options.",
+  "download": "/go2link/RfSBlfPV2hc76Ltgac-uTKoGiVIPoFpnyttN0JyA-hHfZ7YbtxNjJvUXRMJV84lGbk_8hGWjqjpLpzhvJzBzkw",
+  "videoUrl": "https://vembed.online/e/tt31945132"
+},
+  {
     title: "Ondhokarer Gaan (2025)",
     year: "2025",
     category: "Bangla",
