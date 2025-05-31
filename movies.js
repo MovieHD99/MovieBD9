@@ -5,8 +5,8 @@ const movies = [
   "category": "Bangla",
   "img": "https://m.media-amazon.com/images/M/MV5BYzA0ZWM3MWQtZGNiOS00MDM1LTkyMGMtOTQyN2ZlOTRmZTAyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
   "desc": "A WEB-DL comedy-crime-drama movie in Bangla.",
-  "download": "https://drive.google.com/drive/folders/1O5FnE7xy1DpB_WTbD-YB9DLiTVcbzbBT",
-  "videoUrl": "https://drive.google.com/drive/folders/1O5FnE7xy1DpB_WTbD-YB9DLiTVcbzbBT"
+  "download": "https://drive.google.com/file/d/1ixO2dljCB8BisXb4w7bg3qdyEJMDuM4Z/view?usp=sharing",
+  "videoUrl": "https://drive.google.com/file/d/1ixO2dljCB8BisXb4w7bg3qdyEJMDuM4Z/view?usp=sharing"
 },
   {
   "title": "Mirza-Chapter: Club 29",
