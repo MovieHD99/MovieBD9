@@ -1,5 +1,14 @@
 const movies = [
   {
+  "title": "840 (2024) S01 Bengali HDTVRip x264 AAC 720p",
+  "year": "2025",
+  "category": "Bangla",
+  "img": "https://m.media-amazon.com/images/M/MV5BYzA0ZWM3MWQtZGNiOS00MDM1LTkyMGMtOTQyN2ZlOTRmZTAyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+  "desc": "A WEB-DL comedy-crime-drama movie in Bangla.",
+  "download": "https://drive.google.com/drive/folders/1O5FnE7xy1DpB_WTbD-YB9DLiTVcbzbBT",
+  "videoUrl": "https://drive.google.com/drive/folders/1O5FnE7xy1DpB_WTbD-YB9DLiTVcbzbBT"
+},
+  {
   "title": "Mirza-Chapter: Club 29",
   "year": "2025",
   "category": "Bangla",
