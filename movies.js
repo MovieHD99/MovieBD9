@@ -5,20 +5,7 @@ const movies = [
   "category": "Comedy, Drama",
   "img": "https://m.media-amazon.com/images/M/MV5BM2NlZTI0NzEtMTRjYi00YjA2LWJmMzEtMjkzMWNlZWQ4NTZlXkEyXkFqcGc@._V1_.jpg",
   "desc": "Full HD Hindi ORG Movie in Malayalam Multi Audio 4K uHDRip",
-  "download": [
-    {
-      "quality": "1080p",
-      "url": "/go2link/c-y_BWVovmsZ9-mdpGl5X1SxTOQILEO137S8z8X484g4TFup5Lkbh96aj9Y3TyibABe_ORmydS-DB3v_j8ywFw"
-    },
-    {
-      "quality": "720p",
-      "url": "/go2link/4Vk0qW0f1CRC4B--3rBLVfBCgg0FbNQXVFFWyScPbU3efepgRKL9Dd9-gozPgxKFBmeu1YUijr4q0SVxBZd2yg"
-    },
-    {
-      "quality": "4K-HD",
-      "url": "/go2link/Tze9x9MBPopqBlVAJCeASEmkmVBqEtsrbJLdVqipno3_aZfsaw5cPcXaTRQyLatomlocdrS4vSvr0MnpvAPxAA"
-    }
-  ],
+  "download": "go2link/c-y_BWVovmsZ9-mdpGl5X1SxTOQILEO137S8z8X484g4TFup5Lkbh96aj9Y3TyibABe_ORmydS-DB3v_j8ywFw",
   "videoUrl": "https://vembed.online/e/tt34915705"
 },
   {
