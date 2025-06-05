@@ -1,5 +1,14 @@
 const movies = [
   {
+  "title": "Thug Life",
+  "year": "2025",
+  "category": "Action, Drama, Thriller",
+  "img": "https://img.imageride.net/images/2025/06/05/05_06_2025_P_192.jpg",
+  "desc": "HDTS Best Quality Print Full Movie in Hindi S-Print",
+  "download": "#",
+  "videoUrl": "https://vembed.online/e/tt23398540"
+}
+  {
   "title": "Tourist Family",
   "year": "2025",
   "category": "Comedy, Drama",
