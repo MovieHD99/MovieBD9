@@ -7,7 +7,7 @@ const movies = [
   "desc": "HDTS Best Quality Print Full Movie in Hindi S-Print",
   "download": "#",
   "videoUrl": "https://vembed.online/e/tt23398540"
-}
+},
   {
   "title": "Tourist Family",
   "year": "2025",
