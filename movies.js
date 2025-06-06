@@ -1,5 +1,32 @@
 const movies = [
   {
+  "title": "Borbaad",
+  "year": "2025",
+  "category": "Action, Romance, Thriller",
+  "img": "https://i.ibb.co/ZpsRKJhK/1749156497418.jpg",
+  "desc": "Full HD Movie in Bangla WEB-DL",
+  "download":"#",
+  "videoUrl": "https://vembed.online/e/tt33305312"
+},
+  {
+  "title": "Chokkor 302",
+  "year": "2025",
+  "category": "Mystery, Thriller",
+  "img": "https://image.tmdb.org/t/p/original/o2oOpfhEKmKxlmZr0DBsIhizMhg.jpg",
+  "desc": "Full HD movie in Bangla WEB-DL",
+  "download":"#",
+  "videoUrl": "https://vembed.online/e/tt36108604"
+},
+  {
+  "title": "Daagi",
+  "year": "2025",
+  "category": "Action, Romance",
+  "img": "https://m.media-amazon.com/images/M/MV5BNGRlNWFmNmItZjFkMy00OGRkLWEyMzUtNDZlMDIxMjRlN2M2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+  "desc": "Full HD Movie in Bangla WEB-DL",
+  "download":"#",
+  "videoUrl": "https://vembed.online/e/tt34936199"
+},
+  {
   "title": "Thug Life",
   "year": "2025",
   "category": "Action, Drama, Thriller",
