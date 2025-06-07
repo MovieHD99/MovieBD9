@@ -213,10 +213,13 @@
 
         .video-container {
             position: relative;
-            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
             overflow: hidden;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            max-width: 100%;
+            background: #000;
             margin-bottom: 1.5rem;
+            border-radius: 8px;
         }
 
         .video-container iframe {
@@ -225,35 +228,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            border: 0;
-            border-radius: 8px;
         }
 
-        /* --- CSS FOR THE CUSTOM FULLSCREEN BUTTON --- */
-        .custom-fullscreen-btn {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border: none;
-            border-radius: 5px;
-            padding: 8px;
+        #ad-script-container {
+            margin: 1.5rem auto;
+            text-align: center;
+            min-height: 50px;
             cursor: pointer;
-            z-index: 2147483647; /* Ensures it's on top of the iframe */
-            display: block;
         }
 
-        .custom-fullscreen-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: #fff;
-            display: block;
-        }
-
-        .custom-fullscreen-btn:hover {
-            background-color: #e50914;
-        }
-        
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -294,7 +277,16 @@
     <header>
         <h1>🎬 Daily Movie Updates</h1>
     </header>
-
+<script type="text/javascript">
+	atOptions = {
+		'key' : 'ece0d8dbb1cda440fadc14e551091650',
+		'format' : 'iframe',
+		'height' : 50,
+		'width' : 320,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//surprisinglystaunchdemocratic.com/ece0d8dbb1cda440fadc14e551091650/invoke.js"></script>
     <nav>
         <a id="nav-all">All</a>
         <a id="nav-hollywood">Hollywood</a>
@@ -308,18 +300,23 @@
         <button id="next-btn">Next</button>
     </div>
 
+    <div id="ad-script-container"></div>
+
     <script src="movies.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+
             let currentIndex = 0;
             const limit = 6;
-            let filteredMovies = [];
+            let filteredMovies = []; 
             const container = document.getElementById("movie-container");
             const nextBtn = document.getElementById("next-btn");
-            const gitHubPagesBasePath = "/MovieHD99"; // Your repository name
+            const gitHubPagesBasePath = "/MovieHD99";
             const isCanvasPreview = window.location.protocol === 'blob:';
+            const AD_INTERVAL = 30 * 60 * 1000; 
+            const adScriptContainer = document.getElementById('ad-script-container');
+            let adCheckTimeout = null; 
 
-            // Function to generate URL-friendly slugs
             function generateSlug(title) {
                 return title.toLowerCase()
                     .replace(/[^\w\s-]/g, '') 
@@ -327,14 +324,13 @@
                     .replace(/^-+|-+$/g, '');
             }
 
-            // Function to display movies
             function displayMovies() {
                 const nextBatch = filteredMovies.slice(currentIndex, currentIndex + limit);
                 nextBatch.forEach((movie) => {
                     const div = document.createElement("div");
                     div.className = "movie";
                     div.innerHTML = `
-                        <img src="${movie.img}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://placehold.co/250px/375/333333/FFFFFF?text=Image+Not+Found';" />
+                        <img src="${movie.img}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://placehold.co/250x375/333333/FFFFFF?text=Image+Not+Found';" />
                         <h2>${movie.title}</h2>
                         <div class="button-wrapper">
                             <button class="view-details-btn" data-title="${encodeURIComponent(movie.title)}">View Details</button>
@@ -362,7 +358,6 @@
                 nextBtn.style.display = currentIndex >= filteredMovies.length ? "none" : "inline-block";
             }
 
-            // Function to set up navigation
             function updateNavLinks() {
                 const navLinks = [
                     { id: 'nav-all', category: 'All' },
@@ -382,7 +377,6 @@
                 });
             }
 
-            // Function to filter movies
             function filterMovies(category) {
                 container.innerHTML = '';
                 currentIndex = 0;
@@ -393,12 +387,11 @@
                     nextBtn.style.display = 'none';
                     return;
                 }
-                filteredMovies = category === "All" ? [...movies] : movies.filter(movie => movie.category.includes(category));
+                filteredMovies = category === "All" ? [...movies] : movies.filter(movie => movie.category === category);
                 displayMovies();
                 nextBtn.style.display = currentIndex < filteredMovies.length ? "inline-block" : "none";
             }
 
-            // Function to show movie details - FINAL VERSION WITH TOGGLE
             function showMovieDetails(title) {
                 container.innerHTML = '';
                 nextBtn.style.display = 'none';
@@ -415,12 +408,8 @@
                 }
 
                 document.title = `${movie.title} - Details`;
-                const detailViewDiv = document.createElement("div");
-                detailViewDiv.className = "movie-detail-view";
-
-                // Define SVG icons for enter and exit fullscreen
-                const enterFullscreenIcon = `<svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>`;
-                const exitFullscreenIcon = `<svg viewBox="0 0 24 24"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>`;
+                const div = document.createElement("div");
+                div.className = "movie-detail-view";
 
                 let movieDetailHtml = `
                     <img src="${movie.img}" alt="${movie.title}" onerror="this.onerror=null;this.src='https://placehold.co/350x500/333333/FFFFFF?text=Image+Not+Found';" />
@@ -429,63 +418,34 @@
                     <p>${movie.desc}</p>
                 `;
 
-                if (movie.videoUrl && movie.videoUrl !== '#') {
+                if (movie.videoUrl) {
                     movieDetailHtml += `
                         <div class="video-container">
-                            <iframe 
-                                src="${movie.videoUrl}" 
-                                frameborder="0" 
-                                webkitallowfullscreen mozallowfullscreen allowfullscreen
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen">
-                            </iframe>
-                            <button class="custom-fullscreen-btn" aria-label="Toggle Fullscreen">
-                                ${enterFullscreenIcon}
-                            </button>
+                            <iframe src="${movie.videoUrl}" sandbox="allow-same-origin allow-scripts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     `;
                 }
 
-                movieDetailHtml += `<a href="${movie.download}" class="download-btn" download>⬇️ Download</a>`;
-                detailViewDiv.innerHTML = movieDetailHtml;
+                movieDetailHtml += `
+                    <a href="${movie.download}" class="download-btn" download>⬇️ Download</a>
+                `;
 
-                // --- Fullscreen Toggle Logic ---
-                const fullscreenBtn = detailViewDiv.querySelector('.custom-fullscreen-btn');
-                const videoContainer = detailViewDiv.querySelector('.video-container');
+                div.innerHTML = movieDetailHtml;
 
-                if (fullscreenBtn && videoContainer) {
-                    fullscreenBtn.addEventListener('click', () => {
-                        // Check if the browser is NOT in fullscreen mode
-                        if (!document.fullscreenElement) {
-                            videoContainer.requestFullscreen().catch(err => {
-                                alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-                            });
-                        } else { // If it IS in fullscreen mode
-                            document.exitFullscreen();
-                        }
-                    });
-                }
-
-                // --- Back Button ---
                 const backBtn = document.createElement("button");
                 backBtn.textContent = "Back to Movie List";
                 backBtn.className = "view-details-btn";
                 backBtn.addEventListener("click", () => {
-                    history.pushState({ filterCategory: 'All' }, "Movie List", gitHubPagesBasePath + "/");
+                    const newPath = gitHubPagesBasePath + "/";
+                    if (!isCanvasPreview) {
+                        history.pushState({ filterCategory: 'All' }, "Movie List", newPath);
+                    }
                     filterMovies('All');
                 });
-                
-                detailViewDiv.appendChild(backBtn);
-                container.appendChild(detailViewDiv);
-
-                // Bonus: Change the icon when entering/exiting fullscreen
-                document.addEventListener('fullscreenchange', () => {
-                    if (fullscreenBtn) {
-                        fullscreenBtn.innerHTML = document.fullscreenElement ? exitFullscreenIcon : enterFullscreenIcon;
-                    }
-                });
+                div.appendChild(backBtn);
+                container.appendChild(div);
             }
 
-            // Function for 'Movie Not Found'
             function showMovieNotFoundError() {
                 container.innerHTML = `
                     <div class="movie-detail-view" style="text-align: center; grid-column: 1 / -1;">
@@ -501,7 +461,6 @@
                 });
             }
 
-            // Handle browser navigation
             window.addEventListener("popstate", (event) => {
                 if (event.state?.movieTitle) {
                     showMovieDetails(event.state.movieTitle);
@@ -512,32 +471,101 @@
                 }
             });
 
-            // Handle routing on page load
             function handleRouteChange() {
-                const currentPath = window.location.pathname;
+                const urlParams = new URLSearchParams(window.location.search);
+                const redirectedPath = urlParams.get('p');
+                let currentPath;
+
+                if (redirectedPath) {
+                    currentPath = decodeURIComponent(redirectedPath);
+                    if (!isCanvasPreview) {
+                        history.replaceState(history.state || {}, '', currentPath);
+                    }
+                } else {
+                    currentPath = window.location.pathname;
+                }
+
                 let slug = currentPath.startsWith(gitHubPagesBasePath) ? currentPath.substring(gitHubPagesBasePath.length) : currentPath;
                 if (slug.startsWith('/')) slug = slug.substring(1);
+
+                console.log("Routing based on slug:", slug);
 
                 if (slug && slug !== '') {
                     const movie = movies.find(m => generateSlug(m.title) === slug);
                     if (movie) {
                         showMovieDetails(movie.title);
                     } else {
-                        showMovieNotFoundError();
+                        const categoryMatch = ['All', 'Hollywood', 'Bollywood', 'Bangla'].find(c => c.toLowerCase() === slug.toLowerCase());
+                        if (categoryMatch) {
+                            filterMovies(categoryMatch);
+                        } else {
+                            showMovieNotFoundError();
+                        }
                     }
                 } else {
                     filterMovies('All');
                 }
             }
-
-            // Initialization function
-            function init() {
-                updateNavLinks();
-                handleRouteChange(); 
-                nextBtn.addEventListener("click", displayMovies);
+            
+            function canShowAdNow() {
+                const lastClickTime = localStorage.getItem('lastAdClickTime');
+                if (!lastClickTime) return true;
+                return (Date.now() - parseInt(lastClickTime)) >= AD_INTERVAL;
             }
 
-            // Ensure movies.js is loaded before initializing
+            function handleAdClicked() {
+                console.log("Ad container clicked - Hiding for 30 mins!");
+                localStorage.setItem('lastAdClickTime', Date.now());
+                if (adScriptContainer) {
+                    adScriptContainer.innerHTML = '';
+                    adScriptContainer.style.display = 'none';
+                }
+                clearTimeout(adCheckTimeout);
+                adCheckTimeout = setTimeout(attemptToShowAd, AD_INTERVAL);
+            }
+
+            function attemptToShowAd() {
+                clearTimeout(adCheckTimeout);
+
+                if (canShowAdNow() && adScriptContainer) {
+                    console.log("Loading ad...");
+                    adScriptContainer.innerHTML = '';
+                    adScriptContainer.style.display = 'block';
+
+                    const script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.src = '//surprisinglystaunchdemocratic.com/d1/26/cc/d126cc889115577f9acfa2f4b91c68e7.js';
+                    script.onerror = () => {
+                        console.error("Ad script failed to load.");
+                        adScriptContainer.innerHTML = '';
+                        adScriptContainer.style.display = 'none';
+                        adCheckTimeout = setTimeout(attemptToShowAd, AD_INTERVAL);
+                    };
+                    script.onload = () => {
+                        console.log("Ad script loaded. Click container to hide for 30 mins.");
+                        adScriptContainer.onclick = handleAdClicked;
+                        adCheckTimeout = setTimeout(attemptToShowAd, AD_INTERVAL);
+                    };
+                    adScriptContainer.appendChild(script);
+
+                } else {
+                    console.log("Ad suppressed (waiting 30 mins post-click).");
+                    const lastClick = localStorage.getItem('lastAdClickTime');
+                    let timeToWait = AD_INTERVAL;
+                    if (lastClick) {
+                        timeToWait = AD_INTERVAL - (Date.now() - parseInt(lastClick));
+                    }
+                    adCheckTimeout = setTimeout(attemptToShowAd, Math.max(10000, timeToWait));
+                }
+            }
+            
+            function init() {
+                updateNavLinks();
+                handleRouteChange();
+                nextBtn.addEventListener("click", displayMovies);
+                attemptToShowAd();
+            }
+
             if (typeof movies !== 'undefined' && movies.length > 0) {
                 init();
             } else {
@@ -551,7 +579,7 @@
                     }
                 }, 500);
             }
-        });
+        }); 
     </script>
 </body>
 </html>
