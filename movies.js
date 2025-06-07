@@ -7,7 +7,7 @@ const movies = [
     "desc": "Full in Bangla WEB-DL",
     "download": "#",
     "videoUrl": "https://rumble.com/embed/v6s92xv/?pub=1tf892"
-  },
+   },
    {
     "title": "Bechelor Point Season 5  Ep 1",
     "year": "2025",
