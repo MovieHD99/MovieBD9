@@ -25,7 +25,7 @@ const movies = [
     "desc": "Full HD Movie in Bangla WEB-DL",
     "download": "#",
     "videoUrl": "https://vembed.online/e/tt33305312"
-  }
+  },
   {
   "title": "Chokkor 302",
   "year": "2025",
